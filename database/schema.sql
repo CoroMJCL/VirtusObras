@@ -106,7 +106,7 @@ create table mantenciones (
   equipo text not null, -- ej: "Calefont Junkers 5L"
   fecha_instalacion date not null default current_date,
   frecuencia_meses int not null default 12,
-  proxima_fecha date generated always as (fecha_instalacion + (frecuencia_meses || ' months')::interval) stored,
+  proxima_fecha date generated always as ((fecha_instalacion + (frecuencia_meses * interval '1 month'))::date) stored,
   notificado boolean default false,
   notificado_en timestamptz,
   activo boolean default true,
