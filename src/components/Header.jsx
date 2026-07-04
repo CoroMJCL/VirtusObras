@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Settings } from 'lucide-react'
 import logo from '../assets/logo-icon.png'
 
 const LINKS = [
@@ -48,18 +49,35 @@ export default function Header() {
           >
             Solicitar visita
           </a>
+          <a
+            href="/admin"
+            aria-label="Acceso administrador"
+            title="Acceso administrador"
+            className="focus-ring text-bone/30 transition-colors hover:text-gold"
+          >
+            <Settings size={18} strokeWidth={1.6} />
+          </a>
         </nav>
 
-        <button
-          className="focus-ring text-bone md:hidden"
-          onClick={() => setOpen((o) => !o)}
-          aria-label="Abrir menú"
-          aria-expanded={open}
-        >
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-            {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-          </svg>
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+          <a
+            href="/admin"
+            aria-label="Acceso administrador"
+            className="focus-ring text-bone/30 hover:text-gold"
+          >
+            <Settings size={18} strokeWidth={1.6} />
+          </a>
+          <button
+            className="focus-ring text-bone"
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Abrir menú"
+            aria-expanded={open}
+          >
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+              {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {open && (
