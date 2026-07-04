@@ -19,6 +19,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
