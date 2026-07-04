@@ -14,7 +14,15 @@ export default function Footer({ numeroWhatsapp }) {
         <p className="max-w-sm text-sm text-bone/45">Soluciones Integrales en Obras</p>
         <SECBadge />
         <p className="text-xs text-bone/30">
-          © {new Date().getFullYear()} Virtus Obras. Todos los derechos reservados.
+          © {new Date().getFullYear()} Virtus Obras. Todos los derechos reservados. Sitio desarrollado por{' '}
+          <a
+            href="https://www.tempvs7.cl"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-ring text-bone/40 underline decoration-bone/20 underline-offset-2 transition-colors hover:text-gold hover:decoration-gold"
+          >
+            TEMPVS7
+          </a>
         </p>
       </div>
     </footer>
