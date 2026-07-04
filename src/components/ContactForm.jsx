@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient.js'
+import { formatCLP } from '../lib/formatters.js'
 
 const SERVICIOS = ['Gasfitería', 'Mueblería a medida', 'Puertas y ventanas', 'Asesoría técnica', 'No estoy seguro']
 
-export default function ContactForm() {
+export default function ContactForm({ costoVisita }) {
   const [form, setForm] = useState({ nombre: '', telefono: '', correo: '', servicio_interes: '', mensaje: '' })
   const [estado, setEstado] = useState('idle') // idle | enviando | ok | error
 
@@ -32,6 +33,12 @@ export default function ContactForm() {
           <p className="mt-5 max-w-md text-bone/60">
             Respondemos en menos de 24 horas hábiles. Si es urgente, usa el botón de WhatsApp.
           </p>
+          {costoVisita > 0 && (
+            <p className="mt-5 max-w-md rounded-xl border border-gold/25 bg-gold/5 px-4 py-3 text-sm text-gold/90">
+              La visita técnica tiene un costo de <strong>{formatCLP(costoVisita)}</strong>, que se descuenta del
+              total si decides aceptar el presupuesto.
+            </p>
+          )}
         </div>
 
         <form onSubmit={onSubmit} className="space-y-5">

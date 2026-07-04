@@ -58,6 +58,17 @@ export default function Configuracion() {
         </div>
 
         <div>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Costo de la visita técnica (CLP)</label>
+          <input
+            type="number" min="0" value={config.costo_visita || 0} onChange={(e) => setConfig({ ...config, costo_visita: e.target.value })}
+            className="focus-ring w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone"
+          />
+          <p className="mt-1.5 text-xs text-bone/35">
+            Se muestra en la página principal. Ponlo en 0 si por ahora la visita es gratuita.
+          </p>
+        </div>
+
+        <div>
           <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Correo para recibir notificaciones</label>
           <input
             type="email" value={config.correo_notificaciones || ''} onChange={(e) => setConfig({ ...config, correo_notificaciones: e.target.value })}

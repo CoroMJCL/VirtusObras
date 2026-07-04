@@ -61,7 +61,7 @@ export default function Landing() {
       <ProcessBar />
       <CredentialsSection />
       <Gallery proyectos={proyectos} />
-      <ContactForm />
+      <ContactForm costoVisita={config?.costo_visita} />
       <Footer numeroWhatsapp={numeroWhatsapp} />
       <WhatsAppButton numero={numeroWhatsapp} mensaje={config?.whatsapp_mensaje_defecto} />
       <AIAssistant />

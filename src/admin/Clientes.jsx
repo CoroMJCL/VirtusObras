@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Plus, Search, Trash2, Edit3, X } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient.js'
+import { REGIONES_CHILE, comunasDeRegion, regionDeComuna } from '../lib/chileRegiones.js'
+import AddressField from '../components/AddressField.jsx'
 
-const VACIO = { nombre: '', rut: '', telefono: '', correo: '', direccion: '', comuna: '', contacto_preferido: 'whatsapp', notas: '' }
+const VACIO = { nombre: '', rut: '', telefono: '', correo: '', direccion: '', region: '', comuna: '', contacto_preferido: 'whatsapp', notas: '' }
 
 export default function Clientes() {
   const [clientes, setClientes] = useState([])
@@ -94,7 +96,7 @@ export default function Clientes() {
                 <td className="px-5 py-4 text-bone/70">{[c.direccion, c.comuna].filter(Boolean).join(', ')}</td>
                 <td className="px-5 py-4">
                   <div className="flex justify-end gap-2">
-                    <button onClick={() => setEditando(c)} className="focus-ring rounded-lg p-2 text-bone/50 hover:bg-white/5 hover:text-gold">
+                    <button onClick={() => setEditando({ ...c, region: c.region || regionDeComuna(c.comuna) })} className="focus-ring rounded-lg p-2 text-bone/50 hover:bg-white/5 hover:text-gold">
                       <Edit3 size={16} />
                     </button>
                     <button onClick={() => eliminar(c.id)} className="focus-ring rounded-lg p-2 text-bone/50 hover:bg-white/5 hover:text-red-400">
@@ -127,10 +129,34 @@ export default function Clientes() {
                 className="focus-ring rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone" />
               <input placeholder="Correo electrónico" type="email" value={editando.correo || ''} onChange={(e) => setEditando({ ...editando, correo: e.target.value })}
                 className="focus-ring rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone sm:col-span-2" />
-              <input placeholder="Dirección del servicio" value={editando.direccion || ''} onChange={(e) => setEditando({ ...editando, direccion: e.target.value })}
-                className="focus-ring rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone" />
-              <input placeholder="Comuna" value={editando.comuna || ''} onChange={(e) => setEditando({ ...editando, comuna: e.target.value })}
-                className="focus-ring rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone" />
+              <div className="sm:col-span-2">
+                <AddressField
+                  value={editando.direccion || ''}
+                  onChange={(v) => setEditando({ ...editando, direccion: v })}
+                  placeholder="Dirección del servicio"
+                />
+              </div>
+              <select
+                value={editando.region || ''}
+                onChange={(e) => setEditando({ ...editando, region: e.target.value, comuna: '' })}
+                className="focus-ring rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone/80"
+              >
+                <option value="" className="bg-obsidian">Región…</option>
+                {REGIONES_CHILE.map((r) => (
+                  <option key={r.region} value={r.region} className="bg-obsidian">{r.region}</option>
+                ))}
+              </select>
+              <select
+                value={editando.comuna || ''}
+                onChange={(e) => setEditando({ ...editando, comuna: e.target.value })}
+                disabled={!editando.region}
+                className="focus-ring rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone/80 disabled:opacity-40"
+              >
+                <option value="" className="bg-obsidian">Comuna…</option>
+                {comunasDeRegion(editando.region).map((c) => (
+                  <option key={c} value={c} className="bg-obsidian">{c}</option>
+                ))}
+              </select>
               <select value={editando.contacto_preferido} onChange={(e) => setEditando({ ...editando, contacto_preferido: e.target.value })}
                 className="focus-ring rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone/80 sm:col-span-2">
                 <option value="llamada" className="bg-obsidian">Contacto preferido: Llamada</option>
