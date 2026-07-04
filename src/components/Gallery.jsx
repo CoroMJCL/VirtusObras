@@ -34,8 +34,10 @@ export default function Gallery({ proyectos }) {
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-12 flex items-end justify-between">
           <div>
-            <p className="mb-3 text-xs uppercase tracking-[0.2em] text-gold">Proyectos destacados</p>
-            <h2 className="font-display text-3xl font-light text-bone sm:text-4xl">Trabajo entregado</h2>
+            <p className="mb-3 eyebrow text-xs uppercase text-gold">Proyectos destacados</p>
+            <h2 className="font-display text-3xl font-light leading-[1.15] tracking-tight text-bone sm:text-4xl">
+              Trabajo <span className="italic text-bone/80">entregado</span>
+            </h2>
           </div>
           <div className="hidden gap-2 sm:flex">
             <button

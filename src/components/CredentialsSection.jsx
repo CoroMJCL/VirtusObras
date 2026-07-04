@@ -31,8 +31,10 @@ export default function CredentialsSection() {
         <div className="mb-12 flex items-center gap-3">
           <ShieldCheck className="h-6 w-6 text-gold" strokeWidth={1.5} />
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-gold">Transparencia</p>
-            <h2 className="font-display text-2xl font-light text-bone sm:text-3xl">Credenciales verificables</h2>
+            <p className="eyebrow text-xs uppercase text-gold">Transparencia</p>
+            <h2 className="font-display text-2xl font-light leading-tight tracking-tight text-bone sm:text-3xl">
+              Credenciales <span className="italic text-bone/80">verificables</span>
+            </h2>
           </div>
         </div>
 

@@ -11,9 +11,9 @@ export default function ProcessBar() {
   return (
     <section id="proceso" className="border-t border-white/5 bg-obsidian py-28">
       <div className="mx-auto max-w-6xl px-6">
-        <p className="mb-3 text-xs uppercase tracking-[0.2em] text-gold">Cómo trabajamos</p>
-        <h2 className="mb-16 font-display text-3xl font-light text-bone sm:text-4xl">
-          Un expediente, cuatro etapas
+        <p className="mb-3 eyebrow text-xs uppercase text-gold">Cómo trabajamos</p>
+        <h2 className="mb-16 font-display text-3xl font-light leading-[1.15] tracking-tight text-bone sm:text-4xl">
+          Un expediente, cuatro <span className="italic text-bone/80">etapas</span>
         </h2>
 
         <div className="relative">

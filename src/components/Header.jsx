@@ -28,7 +28,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="#top" className="flex items-center gap-3">
           <img src={logo} alt="Virtus Obras" className="h-9 w-9 rounded-full" />
-          <span className="font-display text-lg tracking-wide text-bone">
+          <span className="font-display text-lg tracking-[0.01em] text-bone">
             VIRTUS <span className="text-gold">| OBRAS</span>
           </span>
         </a>

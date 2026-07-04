@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, Users, FileText, FolderKanban, BellRing, Mail, Settings, LogOut } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth.js'
 import logo from '../assets/logo-icon.png'
@@ -15,6 +15,12 @@ const NAV = [
 
 export default function AdminLayout() {
   const { signOut } = useAuth()
+  const navigate = useNavigate()
+
+  const salir = async () => {
+    await signOut()
+    navigate('/', { replace: true })
+  }
 
   return (
     <div className="flex min-h-screen bg-obsidian text-bone">
@@ -46,11 +52,11 @@ export default function AdminLayout() {
         </nav>
 
         <button
-          onClick={signOut}
+          onClick={salir}
           className="focus-ring m-3 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-bone/50 hover:bg-white/5 hover:text-red-400"
         >
           <LogOut size={18} strokeWidth={1.6} />
-          Cerrar sesión
+          Salir
         </button>
       </aside>
 

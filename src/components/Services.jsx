@@ -7,9 +7,9 @@ export default function Services({ servicios }) {
     <section id="servicios" className="border-t border-white/5 bg-charcoal py-28">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-16 max-w-xl">
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-gold">Qué hacemos</p>
-          <h2 className="font-display text-3xl font-light text-bone sm:text-4xl">
-            Cuatro especialidades, un mismo estándar
+          <p className="mb-3 eyebrow text-xs uppercase text-gold">Qué hacemos</p>
+          <h2 className="font-display text-3xl font-light leading-[1.15] tracking-tight text-bone sm:text-4xl">
+            Cuatro especialidades, un mismo <span className="italic text-bone/80">estándar</span>
           </h2>
         </div>
 

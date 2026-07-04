@@ -26,9 +26,9 @@ export default function ContactForm({ costoVisita }) {
     <section id="contacto" className="border-t border-white/5 bg-obsidian py-28">
       <div className="mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-2">
         <div>
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-gold">Contacto</p>
-          <h2 className="font-display text-3xl font-light text-bone sm:text-4xl">
-            Cuéntanos qué necesitas
+          <p className="mb-3 eyebrow text-xs uppercase text-gold">Contacto</p>
+          <h2 className="font-display text-3xl font-light leading-[1.15] tracking-tight text-bone sm:text-4xl">
+            Cuéntanos qué <span className="italic text-bone/80">necesitas</span>
           </h2>
           <p className="mt-5 max-w-md text-bone/60">
             Respondemos en menos de 24 horas hábiles. Si es urgente, usa el botón de WhatsApp.

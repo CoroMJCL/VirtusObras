@@ -16,23 +16,23 @@ export default function Hero({ titulo, subtitulo, numeroWhatsapp }) {
       </div>
 
       <div className="relative mx-auto w-full max-w-6xl px-6 pt-24">
-        <p className="animate-fade-up mb-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-obsidian/40 px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-gold backdrop-blur-sm">
+        <p className="animate-fade-up mb-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-obsidian/40 px-4 py-1.5 eyebrow text-xs uppercase text-gold backdrop-blur-sm">
           Ingeniería en construcción · Santiago
         </p>
 
         <h1
-          className="animate-fade-up max-w-2xl font-display text-5xl font-light leading-[1.08] text-bone sm:text-6xl lg:text-7xl"
+          className="animate-fade-up max-w-2xl font-display text-5xl font-light leading-[1.04] tracking-tight text-bone sm:text-6xl lg:text-[5.2rem]"
           style={{ animationDelay: '0.1s' }}
         >
           {titulo || (
             <>
-              Soluciones integrales<br />en <span className="text-gold-gradient">obras</span>
+              Soluciones integrales<br />en <span className="italic text-gold-gradient">obras</span>
             </>
           )}
         </h1>
 
         <p
-          className="animate-fade-up mt-6 max-w-lg text-lg leading-relaxed text-bone/70"
+          className="animate-fade-up mt-6 max-w-lg text-[17px] leading-relaxed text-bone/70"
           style={{ animationDelay: '0.2s' }}
         >
           {subtitulo ||
