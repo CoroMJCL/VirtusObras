@@ -1,12 +1,9 @@
-import heroBg from "../assets/hero-bg.png";
-import SECBadge from "./SECBadge.jsx";
+import heroBg from '../assets/hero-bg.png'
+import SECBadge from './SECBadge.jsx'
 
 export default function Hero({ titulo, subtitulo, numeroWhatsapp }) {
   return (
-    <section
-      id="top"
-      className="relative flex min-h-screen items-center overflow-hidden"
-    >
+    <section id="top" className="relative flex min-h-screen items-center overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={heroBg}
@@ -25,28 +22,26 @@ export default function Hero({ titulo, subtitulo, numeroWhatsapp }) {
 
         <h1
           className="animate-fade-up max-w-2xl font-display text-5xl font-light leading-[1.04] tracking-tight text-bone sm:text-6xl lg:text-[5.2rem]"
-          style={{ animationDelay: "0.1s" }}
+          style={{ animationDelay: '0.1s' }}
         >
           {titulo || (
             <>
-              Soluciones integrales
-              <br />
-              en <span className="italic text-gold-gradient">obras</span>
+              Soluciones integrales<br />en <span className="italic text-gold-gradient">obras</span>
             </>
           )}
         </h1>
 
         <p
           className="animate-fade-up mt-6 max-w-lg text-[17px] leading-relaxed text-bone/70"
-          style={{ animationDelay: "0.2s" }}
+          style={{ animationDelay: '0.2s' }}
         >
           {subtitulo ||
-            "Gasfitería, mueblería a medida, puertas y ventanas, y asesoría técnica — con el respaldo de un ingeniero en construcción certificado SEC."}
+            'Gasfitería, mueblería a medida, puertas y ventanas, y asesoría técnica — con el respaldo de un ingeniero en construcción certificado SEC.'}
         </p>
 
         <div
           className="animate-fade-up mt-9 flex flex-wrap items-center gap-4"
-          style={{ animationDelay: "0.3s" }}
+          style={{ animationDelay: '0.3s' }}
         >
           <a
             href="#contacto"
@@ -62,13 +57,10 @@ export default function Hero({ titulo, subtitulo, numeroWhatsapp }) {
           </a>
         </div>
 
-        <div
-          className="animate-fade-up mt-14 max-w-xs"
-          style={{ animationDelay: "0.4s" }}
-        >
+        <div className="animate-fade-up mt-14 max-w-xs" style={{ animationDelay: '0.4s' }}>
           <SECBadge />
         </div>
       </div>
     </section>
-  );
+  )
 }
