@@ -252,7 +252,16 @@ export default function PresupuestoEditor() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Fecha de creación</label>
+            <input
+              type="date"
+              value={(presupuesto.creado_en || new Date().toISOString()).slice(0, 10)}
+              onChange={(e) => setPresupuesto({ ...presupuesto, creado_en: e.target.value })}
+              className="focus-ring w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone [color-scheme:dark]"
+            />
+          </div>
           <div>
             <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Descuento (CLP)</label>
             <input
