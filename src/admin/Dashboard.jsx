@@ -3,11 +3,14 @@ import { Users, FileText, FolderKanban, BellRing } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient.js'
 import { useAuth } from '../hooks/useAuth.js'
 import { formatCLP } from '../lib/formatters.js'
-import MiniCalendar from './MiniCalendar.jsx'
+import DatePickerButton from './DatePickerButton.jsx'
 
-const FECHA_HOY = new Date().toLocaleDateString('es-CL', {
-  weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-})
+function fechaHoyCapitalizada() {
+  const texto = new Date().toLocaleDateString('es-CL', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  })
+  return texto.charAt(0).toUpperCase() + texto.slice(1)
+}
 
 function saludoSegunHora() {
   const hora = new Date().getHours()
@@ -54,45 +57,44 @@ export default function Dashboard() {
   const TARJETAS = [
     { label: 'Clientes registrados', valor: stats?.clientes ?? '—', icon: Users },
     { label: 'Presupuestos emitidos', valor: stats?.presupuestos ?? '—', icon: FileText },
-    { label: 'Facturado (aprobados)', valor: stats ? formatCLP(stats.totalAprobado) : '—', icon: FileText },
+    { label: 'Facturado (aprobados)', valor: stats ? formatCLP(stats.totalAprobado) : '—', icon: FolderKanban },
     { label: 'Mantenciones próx. 30 días', valor: stats?.proximasMantenciones ?? '—', icon: BellRing },
   ]
 
-  const nombre = session?.user?.email?.split('@')[0] || 'de nuevo'
+  const primerNombre = session?.user?.user_metadata?.nombre?.split(' ')[0]
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="font-display text-2xl font-light capitalize text-bone">
-          {saludoSegunHora()}, {nombre}
-        </h1>
-        <p className="mt-1 text-sm capitalize text-bone/45">{FECHA_HOY}</p>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="grid gap-5 sm:grid-cols-2 lg:col-span-2">
-          {TARJETAS.map(({ label, valor, icon: Icon }) => (
-            <div key={label} className="rounded-2xl border border-white/10 bg-charcoal/80 p-6 backdrop-blur-xl">
-              <Icon size={20} className="text-gold" strokeWidth={1.5} />
-              <p className="mt-4 text-2xl font-light text-bone">{valor}</p>
-              <p className="mt-1 text-sm text-bone/45">{label}</p>
-            </div>
-          ))}
-
-          {stats?.mensajesNuevos > 0 && (
-            <div className="rounded-xl border border-gold/30 bg-gold/10 px-5 py-4 text-sm text-gold sm:col-span-2">
-              Tienes {stats.mensajesNuevos} mensaje(s) sin leer en la sección Mensajes.
-            </div>
-          )}
-        </div>
-
+      <div className="mb-8 flex items-start justify-between">
         <div>
-          <MiniCalendar markedDates={fechasMantencion} />
-          <p className="mt-2 text-center text-xs text-bone/30">
-            Los puntos dorados marcan mantenciones programadas.
-          </p>
+          <h1 className="text-[26px] font-medium tracking-tight text-bone">
+            {saludoSegunHora()}{primerNombre ? `, ${primerNombre}` : ''}
+          </h1>
+          <p className="mt-1 text-[13.5px] text-bone/40">{fechaHoyCapitalizada()}</p>
         </div>
+        <DatePickerButton markedDates={fechasMantencion} />
       </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {TARJETAS.map(({ label, valor, icon: Icon }) => (
+          <div
+            key={label}
+            className="group rounded-2xl border border-white/[0.06] bg-[#141416] p-6 transition-colors hover:border-white/[0.1]"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold/10">
+              <Icon size={16} className="text-gold" strokeWidth={1.75} />
+            </div>
+            <p className="mt-5 text-[26px] font-medium tracking-tight text-bone">{valor}</p>
+            <p className="mt-1 text-[13px] text-bone/40">{label}</p>
+          </div>
+        ))}
+      </div>
+
+      {stats?.mensajesNuevos > 0 && (
+        <div className="mt-4 rounded-2xl border border-gold/20 bg-gold/[0.06] px-5 py-4 text-[13.5px] text-gold">
+          Tienes {stats.mensajesNuevos} mensaje(s) sin leer en la sección Mensajes.
+        </div>
+      )}
     </div>
   )
 }
