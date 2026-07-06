@@ -84,7 +84,7 @@ export default function Proyectos() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-display text-2xl font-light text-[#1d1d1f]">Proyectos</h1>
+        <h1 className="font-display text-2xl font-light text-[#1a2233]">Proyectos</h1>
         <button onClick={crearProyecto} className="focus-ring flex items-center gap-2 rounded-full bg-gold-gradient px-5 py-2.5 text-sm font-medium text-obsidian">
           <Plus size={16} /> Nuevo proyecto
         </button>
@@ -94,13 +94,13 @@ export default function Proyectos() {
         {proyectos.map((p) => (
           <button
             key={p.id} onClick={() => setAbierto(p)}
-            className="group overflow-hidden rounded-2xl border border-[#e5e5e7] bg-white text-left transition-colors hover:border-gold/30"
+            className="group overflow-hidden rounded-2xl border border-[#dde3ea] bg-white text-left transition-colors hover:border-gold/30"
           >
             <div className="relative aspect-video bg-graphite">
               {p.proyecto_fotos?.[0]?.url ? (
                 <img src={p.proyecto_fotos[0].url} alt={p.titulo} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full items-center justify-center text-[#b0b0b5] text-sm">Sin fotos</div>
+                <div className="flex h-full items-center justify-center text-[#a8b3c2] text-sm">Sin fotos</div>
               )}
               {p.destacado && (
                 <span className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-gold px-2 py-0.5 text-[10px] font-semibold text-obsidian">
@@ -109,8 +109,8 @@ export default function Proyectos() {
               )}
             </div>
             <div className="p-4">
-              <p className="font-medium text-[#1d1d1f]">{p.titulo}</p>
-              <p className="text-xs text-[#86868b]">{p.proyecto_fotos?.length || 0}/{MAX_FOTOS} fotos</p>
+              <p className="font-medium text-[#1a2233]">{p.titulo}</p>
+              <p className="text-xs text-[#7c8798]">{p.proyecto_fotos?.length || 0}/{MAX_FOTOS} fotos</p>
             </div>
           </button>
         ))}
@@ -118,10 +118,10 @@ export default function Proyectos() {
 
       {abierto && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6">
-          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-[#e5e5e7] bg-white p-7">
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-[#dde3ea] bg-white p-7">
             <div className="mb-5 flex items-center justify-between">
-              <h2 className="font-display text-lg text-[#1d1d1f]">Editar proyecto</h2>
-              <button onClick={() => setAbierto(null)} className="focus-ring text-[#86868b] hover:text-[#1d1d1f]"><X size={20} /></button>
+              <h2 className="font-display text-lg text-[#1a2233]">Editar proyecto</h2>
+              <button onClick={() => setAbierto(null)} className="focus-ring text-[#7c8798] hover:text-[#1a2233]"><X size={20} /></button>
             </div>
 
             <div className="space-y-4">
@@ -129,14 +129,14 @@ export default function Proyectos() {
                 value={abierto.titulo} onChange={(e) => setAbierto({ ...abierto, titulo: e.target.value })}
                 onBlur={(e) => actualizarProyecto(abierto.id, { titulo: e.target.value })}
                 placeholder="Título del proyecto"
-                className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]"
+                className="focus-ring w-full rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1a2233]"
               />
 
               <div className="grid grid-cols-2 gap-3">
                 <select
                   value={abierto.categoria || ''}
                   onChange={(e) => { setAbierto({ ...abierto, categoria: e.target.value }); actualizarProyecto(abierto.id, { categoria: e.target.value }) }}
-                  className="focus-ring rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#4a4a4f]"
+                  className="focus-ring rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#3a4453]"
                 >
                   <option value="" className="bg-white">Categoría…</option>
                   {servicios.map((s) => <option key={s.slug} value={s.nombre} className="bg-white">{s.nombre}</option>)}
@@ -144,7 +144,7 @@ export default function Proyectos() {
                 <select
                   value={abierto.cliente_id || ''}
                   onChange={(e) => { setAbierto({ ...abierto, cliente_id: e.target.value }); actualizarProyecto(abierto.id, { cliente_id: e.target.value }) }}
-                  className="focus-ring rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#4a4a4f]"
+                  className="focus-ring rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#3a4453]"
                 >
                   <option value="" className="bg-white">Cliente…</option>
                   {clientes.map((c) => <option key={c.id} value={c.id} className="bg-white">{c.nombre}</option>)}
@@ -155,21 +155,21 @@ export default function Proyectos() {
                 rows={2} value={abierto.descripcion || ''} onChange={(e) => setAbierto({ ...abierto, descripcion: e.target.value })}
                 onBlur={(e) => actualizarProyecto(abierto.id, { descripcion: e.target.value })}
                 placeholder="Descripción del trabajo realizado"
-                className="focus-ring w-full resize-none rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]"
+                className="focus-ring w-full resize-none rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1a2233]"
               />
 
-              <label className="flex items-center gap-2 text-sm text-[#4a4a4f]">
+              <label className="flex items-center gap-2 text-sm text-[#3a4453]">
                 <input
                   type="checkbox" checked={!!abierto.destacado}
                   onChange={(e) => { setAbierto({ ...abierto, destacado: e.target.checked }); actualizarProyecto(abierto.id, { destacado: e.target.checked }) }}
-                  className="h-4 w-4 rounded border-[#d0d0d5] bg-transparent accent-[#c9a227]"
+                  className="h-4 w-4 rounded border-[#c7d0da] bg-transparent accent-[#c9a227]"
                 />
                 Mostrar en el carrusel de la página principal
               </label>
 
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="text-xs uppercase tracking-wide text-[#86868b]">
+                  <label className="text-[13px] font-medium text-[#1a2233]">
                     Fotos ({abierto.proyecto_fotos?.length || 0}/{MAX_FOTOS})
                   </label>
                   {(abierto.proyecto_fotos?.length || 0) < MAX_FOTOS && (
@@ -185,7 +185,7 @@ export default function Proyectos() {
 
                 <div className="grid grid-cols-3 gap-3">
                   {(abierto.proyecto_fotos || []).map((foto) => (
-                    <div key={foto.id} className="group relative overflow-hidden rounded-xl border border-[#e5e5e7]">
+                    <div key={foto.id} className="group relative overflow-hidden rounded-xl border border-[#dde3ea]">
                       <img src={foto.url} alt={foto.descripcion || ''} className="aspect-square w-full object-cover" />
                       <button
                         onClick={() => eliminarFoto(foto, abierto.id)}
@@ -197,7 +197,7 @@ export default function Proyectos() {
                         defaultValue={foto.descripcion || ''}
                         onBlur={(e) => actualizarDescripcionFoto(foto.id, e.target.value)}
                         placeholder="Descripción…"
-                        className="focus-ring w-full bg-black/70 px-2 py-1 text-[11px] text-[#4a4a4f] placeholder:text-[#a0a0a5]"
+                        className="focus-ring w-full bg-black/70 px-2 py-1 text-[11px] text-[#3a4453] placeholder:text-[#94a1b3]"
                       />
                     </div>
                   ))}
@@ -206,7 +206,7 @@ export default function Proyectos() {
 
               <button
                 onClick={() => eliminarProyecto(abierto.id)}
-                className="focus-ring flex items-center gap-2 text-sm text-red-400 hover:underline"
+                className="focus-ring flex items-center gap-2 text-sm text-red-600 hover:underline"
               >
                 <Trash2 size={14} /> Eliminar proyecto
               </button>

@@ -67,10 +67,10 @@ export default function Dashboard() {
     <div>
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-[26px] font-medium tracking-tight text-[#1d1d1f]">
+          <h1 className="text-[26px] font-medium tracking-tight text-[#1a2233]">
             {saludoSegunHora()}{primerNombre ? `, ${primerNombre}` : ''}
           </h1>
-          <p className="mt-1 text-[13.5px] text-[#86868b]">{fechaHoyCapitalizada()}</p>
+          <p className="mt-1 text-[13.5px] text-[#7c8798]">{fechaHoyCapitalizada()}</p>
         </div>
         <DatePickerButton markedDates={fechasMantencion} />
       </div>
@@ -79,13 +79,13 @@ export default function Dashboard() {
         {TARJETAS.map(({ label, valor, icon: Icon }) => (
           <div
             key={label}
-            className="rounded-2xl border border-[#e5e5e7] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+            className="rounded-2xl border border-[#dde3ea] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#c9a227]/10">
               <Icon size={16} className="text-[#a8841b]" strokeWidth={1.75} />
             </div>
-            <p className="mt-5 text-[26px] font-medium tracking-tight text-[#1d1d1f]">{valor}</p>
-            <p className="mt-1 text-[13px] text-[#86868b]">{label}</p>
+            <p className="mt-5 text-[26px] font-medium tracking-tight text-[#1a2233]">{valor}</p>
+            <p className="mt-1 text-[13px] text-[#7c8798]">{label}</p>
           </div>
         ))}
       </div>

@@ -70,25 +70,25 @@ export default function Mantenciones() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-display text-2xl font-light text-[#1d1d1f]">Mantenciones</h1>
+        <h1 className="font-display text-2xl font-light text-[#1a2233]">Mantenciones</h1>
         <button onClick={() => setNuevo({ ...VACIO })} className="focus-ring flex items-center gap-2 rounded-full bg-gold-gradient px-5 py-2.5 text-sm font-medium text-obsidian">
           <Plus size={16} /> Nueva alerta
         </button>
       </div>
 
-      <p className="mb-5 text-sm text-[#86868b]">
+      <p className="mb-5 text-sm text-[#7c8798]">
         Registra equipos instalados (ej: calefont) para que el sistema recuerde avisar al cliente por correo y a ti por push cuando se acerque la fecha de mantención.
       </p>
 
       {mensaje && (
-        <div className={`mb-5 rounded-xl px-4 py-3 text-sm ${mensaje.tipo === 'ok' ? 'bg-emerald-500/10 text-emerald-300' : 'bg-red-500/10 text-red-300'}`}>
+        <div className={`mb-5 rounded-xl px-4 py-3 text-sm ${mensaje.tipo === 'ok' ? 'bg-emerald-500/10 text-emerald-700' : 'bg-red-500/10 text-red-700'}`}>
           {mensaje.texto}
         </div>
       )}
 
-      <div className="overflow-hidden rounded-2xl border border-[#e5e5e7]">
+      <div className="overflow-hidden rounded-2xl border border-[#dde3ea]">
         <table className="w-full text-sm">
-          <thead className="bg-white text-left text-xs uppercase tracking-wide text-[#86868b]">
+          <thead className="bg-[#fafbfc] text-left text-[11px] font-semibold uppercase tracking-wide text-[#7c8798] border-b border-[#dde3ea]">
             <tr>
               <th className="px-5 py-3 font-normal">Cliente</th>
               <th className="px-5 py-3 font-normal">Equipo</th>
@@ -96,21 +96,21 @@ export default function Mantenciones() {
               <th className="px-5 py-3 font-normal"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#e5e5e7]">
-            {lista.length === 0 && <tr><td colSpan={4} className="px-5 py-8 text-center text-[#86868b]">Sin alertas registradas.</td></tr>}
+          <tbody className="divide-y divide-[#dde3ea]">
+            {lista.length === 0 && <tr><td colSpan={4} className="px-5 py-8 text-center text-[#7c8798]">Sin alertas registradas.</td></tr>}
             {lista.map((m) => (
-              <tr key={m.id} className="hover:bg-[#f5f5f7]">
+              <tr key={m.id} className="hover:bg-[#eef1f5]">
                 <td className="px-5 py-4">
-                  <p className="font-medium text-[#1d1d1f]">{m.clientes?.nombre}</p>
-                  <p className="text-xs text-[#86868b]">{m.clientes?.correo}</p>
+                  <p className="font-medium text-[#1a2233]">{m.clientes?.nombre}</p>
+                  <p className="text-xs text-[#7c8798]">{m.clientes?.correo}</p>
                 </td>
-                <td className="px-5 py-4 text-[#4a4a4f]">{m.equipo}</td>
+                <td className="px-5 py-4 text-[#3a4453]">{m.equipo}</td>
                 <td className="px-5 py-4">
-                  <span className={proximas30(m.proxima_fecha) ? 'flex items-center gap-1.5 text-gold' : 'text-[#6e6e73]'}>
+                  <span className={proximas30(m.proxima_fecha) ? 'flex items-center gap-1.5 text-gold' : 'text-[#5b6472]'}>
                     {proximas30(m.proxima_fecha) && <BellRing size={13} />}
                     {formatFecha(m.proxima_fecha)}
                   </span>
-                  {m.notificado && <p className="text-xs text-emerald-400">Notificado</p>}
+                  {m.notificado && <p className="text-xs text-emerald-700">Notificado</p>}
                 </td>
                 <td className="px-5 py-4">
                   <div className="flex justify-end gap-2">
@@ -120,7 +120,7 @@ export default function Mantenciones() {
                     >
                       <Send size={12} /> {enviando === m.id ? 'Enviando…' : 'Notificar'}
                     </button>
-                    <button onClick={() => eliminar(m.id)} className="focus-ring rounded-lg p-2 text-[#86868b] hover:text-red-400">
+                    <button onClick={() => eliminar(m.id)} className="focus-ring rounded-lg p-2 text-[#7c8798] hover:text-red-600">
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -133,30 +133,30 @@ export default function Mantenciones() {
 
       {nuevo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6">
-          <form onSubmit={guardar} className="w-full max-w-md rounded-2xl border border-[#e5e5e7] bg-white p-7">
+          <form onSubmit={guardar} className="w-full max-w-md rounded-2xl border border-[#dde3ea] bg-white p-7">
             <div className="mb-5 flex items-center justify-between">
-              <h2 className="font-display text-lg text-[#1d1d1f]">Nueva alerta de mantención</h2>
-              <button type="button" onClick={() => setNuevo(null)} className="focus-ring text-[#86868b] hover:text-[#1d1d1f]"><X size={20} /></button>
+              <h2 className="font-display text-lg text-[#1a2233]">Nueva alerta de mantención</h2>
+              <button type="button" onClick={() => setNuevo(null)} className="focus-ring text-[#7c8798] hover:text-[#1a2233]"><X size={20} /></button>
             </div>
             <div className="space-y-4">
               <select required value={nuevo.cliente_id} onChange={(e) => setNuevo({ ...nuevo, cliente_id: e.target.value })}
-                className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#4a4a4f]">
+                className="focus-ring w-full rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#3a4453]">
                 <option value="" className="bg-white">Cliente…</option>
                 {clientes.map((c) => <option key={c.id} value={c.id} className="bg-white">{c.nombre}</option>)}
               </select>
               <input required placeholder="Equipo (ej: Calefont Junkers 5L)" value={nuevo.equipo}
                 onChange={(e) => setNuevo({ ...nuevo, equipo: e.target.value })}
-                className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]" />
+                className="focus-ring w-full rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1a2233]" />
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="mb-1 block text-xs text-[#86868b]">Fecha de instalación</label>
+                  <label className="mb-1 block text-xs text-[#7c8798]">Fecha de instalación</label>
                   <input type="date" value={nuevo.fecha_instalacion} onChange={(e) => setNuevo({ ...nuevo, fecha_instalacion: e.target.value })}
-                    className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]" />
+                    className="focus-ring w-full rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1a2233]" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs text-[#86868b]">Frecuencia (meses)</label>
+                  <label className="mb-1 block text-xs text-[#7c8798]">Frecuencia (meses)</label>
                   <input type="number" min="1" value={nuevo.frecuencia_meses} onChange={(e) => setNuevo({ ...nuevo, frecuencia_meses: e.target.value })}
-                    className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]" />
+                    className="focus-ring w-full rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1a2233]" />
                 </div>
               </div>
             </div>

@@ -17,11 +17,11 @@ export default function NamePromptModal({ onSaved }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/30 px-6 backdrop-blur-sm">
-      <form onSubmit={guardar} className="w-full max-w-sm rounded-2xl border border-[#e5e5e7] bg-white p-7 shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
+      <form onSubmit={guardar} className="w-full max-w-sm rounded-2xl border border-[#dde3ea] bg-white p-7 shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
         <div className="mb-5 flex flex-col items-center text-center">
           <img src={logo} alt="Virtus Obras" className="h-11 w-11 rounded-full" />
-          <h2 className="mt-4 text-[15px] font-medium text-[#1d1d1f]">¿Cómo te llamas?</h2>
-          <p className="mt-1 text-[13px] text-[#86868b]">Para saludarte por tu nombre en el panel.</p>
+          <h2 className="mt-4 text-[15px] font-medium text-[#1a2233]">¿Cómo te llamas?</h2>
+          <p className="mt-1 text-[13px] text-[#7c8798]">Para saludarte por tu nombre en el panel.</p>
         </div>
 
         <input
@@ -29,7 +29,7 @@ export default function NamePromptModal({ onSaved }) {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           placeholder="Ej: Juan Carlos"
-          className="focus-ring w-full rounded-xl border border-[#d0d0d5] bg-[#f5f5f7] px-4 py-2.5 text-[14px] text-[#1d1d1f] placeholder:text-[#a0a0a5]"
+          className="focus-ring w-full rounded-xl border border-[#c7d0da] bg-[#eef1f5] px-4 py-2.5 text-[14px] text-[#1a2233] placeholder:text-[#94a1b3]"
         />
 
         <button
