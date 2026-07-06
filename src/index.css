@@ -23,6 +23,11 @@ body {
   font-weight: 500;
 }
 
+.rich-text-editable:empty:before {
+  content: attr(data-placeholder);
+  color: rgba(242, 240, 234, 0.3);
+}
+
 ::selection { background: #c9a227; color: #0a0a0b; }
 
 @media (prefers-reduced-motion: reduce) {

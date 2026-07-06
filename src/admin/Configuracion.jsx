@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient.js'
+import RichTextEditor from '../components/RichTextEditor.jsx'
 
 export default function Configuracion() {
   const [config, setConfig] = useState(null)
@@ -75,6 +76,19 @@ export default function Configuracion() {
             placeholder="ingeniero@virtusobras.cl"
             className="focus-ring w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone"
           />
+        </div>
+
+        <div>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Quiénes somos</label>
+          <RichTextEditor
+            value={config.quienes_somos_html || ''}
+            onChange={(html) => setConfig({ ...config, quienes_somos_html: html })}
+            placeholder="Cuenta la historia de la empresa, la experiencia del ingeniero, años en el rubro, etc."
+          />
+          <p className="mt-1.5 text-xs text-bone/35">
+            Este texto aparece en la sección "Quiénes somos" de la página principal. Déjalo vacío si no quieres
+            mostrar esa sección todavía.
+          </p>
         </div>
 
         <button type="submit" className="focus-ring w-full rounded-full bg-gold-gradient py-3 text-sm font-medium text-obsidian">

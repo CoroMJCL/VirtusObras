@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient.js'
 import Header from '../components/Header.jsx'
 import Hero from '../components/Hero.jsx'
+import AboutUs from '../components/AboutUs.jsx'
 import Services from '../components/Services.jsx'
 import ProcessBar from '../components/ProcessBar.jsx'
 import CredentialsSection from '../components/CredentialsSection.jsx'
@@ -57,6 +58,7 @@ export default function Landing() {
         subtitulo={config?.hero_subtitulo}
         numeroWhatsapp={numeroWhatsapp}
       />
+      <AboutUs contenidoHtml={config?.quienes_somos_html} />
       <Services servicios={servicios} />
       <ProcessBar />
       <CredentialsSection />

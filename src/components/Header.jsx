@@ -3,6 +3,7 @@ import { Settings } from 'lucide-react'
 import logo from '../assets/logo-icon.png'
 
 const LINKS = [
+  { href: '#quienes-somos', label: 'Quiénes somos' },
   { href: '#servicios', label: 'Servicios' },
   { href: '#proyectos', label: 'Proyectos' },
   { href: '#proceso', label: 'Cómo trabajamos' },
