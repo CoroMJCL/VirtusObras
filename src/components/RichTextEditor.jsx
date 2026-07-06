@@ -35,7 +35,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Escribe
   ]
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#e5e5e7] bg-[#f5f5f7]">
+    <div className="overflow-hidden rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10">
       <div className="flex items-center gap-1 border-b border-[#e5e5e7] bg-[#fafafa] px-2 py-1.5">
         {BOTONES.map(({ icon: Icon, comando, label }) => (
           <button

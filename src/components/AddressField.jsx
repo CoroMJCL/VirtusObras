@@ -60,7 +60,7 @@ export default function AddressField({ value, onChange, onPlaceSelected, placeho
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 pr-10 text-sm text-[#1d1d1f]"
+        className="focus-ring w-full rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 pr-10 text-sm text-[#1d1d1f]"
       />
       {apiKey && listo ? (
         <MapPin size={16} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gold/60" />
