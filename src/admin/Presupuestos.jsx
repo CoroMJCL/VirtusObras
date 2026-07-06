@@ -5,10 +5,10 @@ import { supabase } from '../lib/supabaseClient.js'
 import { formatCLP, formatFecha } from '../lib/formatters.js'
 
 const ESTADO_STYLES = {
-  cliente: 'bg-black/[0.05] text-[#5b6472]',
+  cliente: 'bg-white/10 text-[#f2f0ea99]',
   presupuesto: 'bg-[#c9a227]/15 text-[#8a6a16]',
-  servicio: 'bg-blue-500/15 text-blue-700',
-  cierre: 'bg-emerald-500/15 text-emerald-700',
+  servicio: 'bg-blue-500/15 text-blue-300',
+  cierre: 'bg-emerald-500/15 text-emerald-400',
 }
 
 export default function Presupuestos() {
@@ -34,7 +34,7 @@ export default function Presupuestos() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-display text-2xl font-light text-[#1a2233]">Presupuestos</h1>
+        <h1 className="font-display text-2xl font-light text-[#f2f0ea]">Presupuestos</h1>
         <Link
           to="/admin/presupuestos/nuevo"
           className="focus-ring flex items-center gap-2 rounded-full bg-gold-gradient px-5 py-2.5 text-sm font-medium text-obsidian"
@@ -43,17 +43,17 @@ export default function Presupuestos() {
         </Link>
       </div>
 
-      <div className="mb-5 flex items-center gap-2 rounded-xl border border-[#c7d0da] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5">
-        <Search size={16} className="text-[#7c8798]" />
+      <div className="mb-5 flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5">
+        <Search size={16} className="text-[#f2f0ea73]" />
         <input
           value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="Buscar por folio o cliente…"
-          className="w-full bg-transparent text-sm text-[#1a2233] placeholder:text-[#94a1b3] focus:outline-none"
+          className="w-full bg-transparent text-sm text-[#f2f0ea] placeholder:text-[#f2f0ea59] focus:outline-none"
         />
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-[#dde3ea]">
+      <div className="overflow-hidden rounded-2xl border border-white/10">
         <table className="w-full text-sm">
-          <thead className="bg-[#fafbfc] text-left text-[11px] font-semibold uppercase tracking-wide text-[#7c8798] border-b border-[#dde3ea]">
+          <thead className="bg-white/[0.03] text-left text-[11px] font-semibold uppercase tracking-wide text-[#f2f0ea73] border-b border-white/10">
             <tr>
               <th className="px-5 py-3 font-normal">Folio</th>
               <th className="px-5 py-3 font-normal">Cliente</th>
@@ -62,24 +62,24 @@ export default function Presupuestos() {
               <th className="px-5 py-3 font-normal">Fecha</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#dde3ea]">
-            {loading && <tr><td colSpan={5} className="px-5 py-8 text-center text-[#7c8798]">Cargando…</td></tr>}
+          <tbody className="divide-y divide-white/5">
+            {loading && <tr><td colSpan={5} className="px-5 py-8 text-center text-[#f2f0ea73]">Cargando…</td></tr>}
             {!loading && filtrados.length === 0 && (
-              <tr><td colSpan={5} className="px-5 py-8 text-center text-[#7c8798]">Sin presupuestos todavía.</td></tr>
+              <tr><td colSpan={5} className="px-5 py-8 text-center text-[#f2f0ea73]">Sin presupuestos todavía.</td></tr>
             )}
             {filtrados.map((p) => (
-              <tr key={p.id} className="cursor-pointer hover:bg-[#eef1f5]">
+              <tr key={p.id} className="cursor-pointer hover:bg-white/[0.04]">
                 <td className="px-5 py-4">
                   <Link to={`/admin/presupuestos/${p.id}`} className="font-mono text-gold hover:underline">{p.folio}</Link>
                 </td>
-                <td className="px-5 py-4 text-[#3a4453]">{p.clientes?.nombre || '—'}</td>
+                <td className="px-5 py-4 text-[#f2f0eab3]">{p.clientes?.nombre || '—'}</td>
                 <td className="px-5 py-4">
                   <span className={`rounded-full px-2.5 py-1 text-xs capitalize ${ESTADO_STYLES[p.estado] || ''}`}>
                     {p.estado}
                   </span>
                 </td>
-                <td className="px-5 py-4 text-[#3a4453]">{formatCLP(p.total)}</td>
-                <td className="px-5 py-4 text-[#7c8798]">{formatFecha(p.creado_en)}</td>
+                <td className="px-5 py-4 text-[#f2f0eab3]">{formatCLP(p.total)}</td>
+                <td className="px-5 py-4 text-[#f2f0ea73]">{formatFecha(p.creado_en)}</td>
               </tr>
             ))}
           </tbody>

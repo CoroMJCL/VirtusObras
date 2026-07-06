@@ -67,10 +67,10 @@ export default function Dashboard() {
     <div>
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-[26px] font-medium tracking-tight text-[#1a2233]">
+          <h1 className="text-[26px] font-medium tracking-tight text-bone">
             {saludoSegunHora()}{primerNombre ? `, ${primerNombre}` : ''}
           </h1>
-          <p className="mt-1 text-[13.5px] text-[#7c8798]">{fechaHoyCapitalizada()}</p>
+          <p className="mt-1 text-[13.5px] text-bone/40">{fechaHoyCapitalizada()}</p>
         </div>
         <DatePickerButton markedDates={fechasMantencion} />
       </div>
@@ -79,19 +79,19 @@ export default function Dashboard() {
         {TARJETAS.map(({ label, valor, icon: Icon }) => (
           <div
             key={label}
-            className="rounded-2xl border border-[#dde3ea] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+            className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] transition-colors hover:border-white/[0.18]"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#c9a227]/10">
-              <Icon size={16} className="text-[#a8841b]" strokeWidth={1.75} />
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold/15">
+              <Icon size={16} className="text-gold" strokeWidth={1.75} />
             </div>
-            <p className="mt-5 text-[26px] font-medium tracking-tight text-[#1a2233]">{valor}</p>
-            <p className="mt-1 text-[13px] text-[#7c8798]">{label}</p>
+            <p className="mt-5 text-[26px] font-medium tracking-tight text-bone">{valor}</p>
+            <p className="mt-1 text-[13px] text-bone/45">{label}</p>
           </div>
         ))}
       </div>
 
       {stats?.mensajesNuevos > 0 && (
-        <div className="mt-4 rounded-2xl border border-[#c9a227]/25 bg-[#c9a227]/[0.06] px-5 py-4 text-[13.5px] text-[#8a6a16]">
+        <div className="mt-4 rounded-2xl border border-gold/20 bg-gold/[0.08] px-5 py-4 text-[13.5px] text-gold backdrop-blur-xl">
           Tienes {stats.mensajesNuevos} mensaje(s) sin leer en la sección Mensajes.
         </div>
       )}

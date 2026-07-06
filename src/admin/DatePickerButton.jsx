@@ -24,16 +24,16 @@ export default function DatePickerButton({ markedDates = [] }) {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setAbierto((o) => !o)}
-        className="focus-ring flex items-center gap-2 rounded-full border border-[#dde3ea] bg-white px-4 py-2 text-[13px] text-[#3a4453] shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors hover:border-[#c7d0da]"
+        className="focus-ring flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-[13px] text-bone/70 backdrop-blur-xl transition-colors hover:border-white/20 hover:text-bone"
       >
-        <CalendarDays size={14} className="text-[#a8841b]" strokeWidth={1.75} />
+        <CalendarDays size={14} className="text-gold" strokeWidth={1.75} />
         {hoy.getDate()} de {MESES[hoy.getMonth()]}
       </button>
 
       {abierto && (
         <div className="absolute right-0 top-[calc(100%+8px)] z-20 w-[300px]">
           <MiniCalendar markedDates={markedDates} />
-          <p className="mt-2 text-center text-[11px] text-[#7c8798]">
+          <p className="mt-2 text-center text-[11px] text-bone/30">
             Los puntos dorados marcan mantenciones programadas.
           </p>
         </div>

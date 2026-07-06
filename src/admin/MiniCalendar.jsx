@@ -29,16 +29,16 @@ export default function MiniCalendar({ markedDates = [] }) {
   }
 
   return (
-    <div className="rounded-2xl border border-[#dde3ea] bg-white p-5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+    <div className="rounded-2xl border border-white/10 bg-[#141416]/90 p-5 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-[14px] font-medium tracking-tight text-[#1a2233]">
-          {MESES[mesActual.getMonth()]} <span className="text-[#7c8798]">{mesActual.getFullYear()}</span>
+        <p className="text-[14px] font-medium tracking-tight text-bone">
+          {MESES[mesActual.getMonth()]} <span className="text-bone/35">{mesActual.getFullYear()}</span>
         </p>
         <div className="flex gap-0.5">
-          <button onClick={() => cambiarMes(-1)} className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-[#7c8798] transition-colors hover:bg-black/[0.04] hover:text-[#1a2233]">
+          <button onClick={() => cambiarMes(-1)} className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-bone/35 transition-colors hover:bg-white/[0.08] hover:text-bone">
             <ChevronLeft size={15} strokeWidth={1.75} />
           </button>
-          <button onClick={() => cambiarMes(1)} className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-[#7c8798] transition-colors hover:bg-black/[0.04] hover:text-[#1a2233]">
+          <button onClick={() => cambiarMes(1)} className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-bone/35 transition-colors hover:bg-white/[0.08] hover:text-bone">
             <ChevronRight size={15} strokeWidth={1.75} />
           </button>
         </div>
@@ -46,7 +46,7 @@ export default function MiniCalendar({ markedDates = [] }) {
 
       <div className="grid grid-cols-7">
         {DIAS.map((d, i) => (
-          <span key={i} className="pb-2 text-center text-[10px] font-medium uppercase tracking-wide text-[#a8b3c2]">
+          <span key={i} className="pb-2 text-center text-[10px] font-medium uppercase tracking-wide text-bone/25">
             {d}
           </span>
         ))}
@@ -60,13 +60,13 @@ export default function MiniCalendar({ markedDates = [] }) {
               <button
                 className={`flex h-7 w-7 items-center justify-center rounded-full text-[12.5px] transition-colors ${
                   esHoy
-                    ? 'bg-[#c9a227] font-semibold text-white'
-                    : 'text-[#1a2233]/80 hover:bg-black/[0.04]'
+                    ? 'bg-gold font-semibold text-[#0c0c0e]'
+                    : 'text-bone/70 hover:bg-white/[0.08]'
                 }`}
               >
                 {d}
               </button>
-              <span className={`h-1 w-1 rounded-full ${tieneMarca && !esHoy ? 'bg-[#c9a227]' : ''}`} />
+              <span className={`h-1 w-1 rounded-full ${tieneMarca && !esHoy ? 'bg-gold' : ''}`} />
             </div>
           )
         })}

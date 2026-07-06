@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient.js'
 import RichTextEditor from '../components/RichTextEditor.jsx'
 
-const inputClass = "focus-ring w-full rounded-xl border border-[#c7d0da] bg-white px-4 py-2.5 text-[14px] text-[#1a2233] shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-colors focus:border-[#c9a227] focus:outline-none focus:ring-2 focus:ring-[#c9a227]/10"
-const labelClass = "mb-1.5 block text-[13px] font-medium text-[#1a2233]"
-const helpClass = "mt-1.5 text-[12.5px] text-[#94a1b3]"
+const inputClass = "focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-[14px] text-[#f2f0ea] backdrop-blur-xl transition-colors focus:border-[#c9a227]/60 focus:outline-none focus:ring-2 focus:ring-[#c9a227]/10"
+const labelClass = "mb-1.5 block text-[13px] font-medium text-[#f2f0ea]"
+const helpClass = "mt-1.5 text-[12.5px] text-[#f2f0ea59]"
 
 function Seccion({ titulo, descripcion, children }) {
   return (
-    <div className="rounded-2xl border border-[#dde3ea] bg-white p-7 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-xl">
       <div className="mb-6">
-        <h2 className="text-[16px] font-semibold tracking-tight text-[#1a2233]">{titulo}</h2>
-        {descripcion && <p className="mt-0.5 text-[13px] text-[#7c8798]">{descripcion}</p>}
+        <h2 className="text-[16px] font-semibold tracking-tight text-[#f2f0ea]">{titulo}</h2>
+        {descripcion && <p className="mt-0.5 text-[13px] text-[#f2f0ea73]">{descripcion}</p>}
       </div>
       <div className="space-y-5">{children}</div>
     </div>
@@ -37,14 +37,14 @@ export default function Configuracion() {
     setTimeout(() => setGuardado(false), 2500)
   }
 
-  if (!config) return <p className="text-[#7c8798]">Cargando configuración…</p>
+  if (!config) return <p className="text-[#f2f0ea73]">Cargando configuración…</p>
 
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-[26px] font-medium tracking-tight text-[#1a2233]">Configuración</h1>
+        <h1 className="text-[26px] font-medium tracking-tight text-[#f2f0ea]">Configuración</h1>
         {guardado && (
-          <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-[12.5px] font-medium text-emerald-700">
+          <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-[12.5px] font-medium text-emerald-400">
             Guardado ✓
           </span>
         )}
@@ -120,13 +120,13 @@ export default function Configuracion() {
         <button
           type="submit"
           disabled={guardando}
-          className="focus-ring w-full rounded-full bg-gold-gradient py-3 text-[14px] font-medium text-[#1a2233] shadow-[0_4px_14px_rgba(201,162,39,0.3)] transition-opacity disabled:opacity-50"
+          className="focus-ring w-full rounded-full bg-gold-gradient py-3 text-[14px] font-medium text-[#f2f0ea] shadow-[0_4px_14px_rgba(201,162,39,0.3)] transition-opacity disabled:opacity-50"
         >
           {guardando ? 'Guardando…' : 'Guardar cambios'}
         </button>
       </form>
 
-      <p className="mt-6 text-[12.5px] leading-relaxed text-[#94a1b3]">
+      <p className="mt-6 text-[12.5px] leading-relaxed text-[#f2f0ea59]">
         Para recibir notificaciones push en tu teléfono cuando se acerque una mantención, activa las notificaciones
         del navegador la primera vez que abras el panel en tu celular (se configura vía OneSignal, ver README).
       </p>

@@ -60,7 +60,7 @@ export default function AddressField({ value, onChange, onPlaceSelected, placeho
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="focus-ring w-full rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 pr-10 text-sm text-[#1d1d1f]"
+        className="focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 pr-10 text-sm text-[#f2f0ea]"
       />
       {apiKey && listo ? (
         <MapPin size={16} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gold/60" />
@@ -71,7 +71,7 @@ export default function AddressField({ value, onChange, onPlaceSelected, placeho
             target="_blank"
             rel="noopener noreferrer"
             title="Verificar dirección en Google Maps"
-            className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 text-[#a0a0a5] hover:text-gold"
+            className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 text-[#f2f0ea59] hover:text-gold"
           >
             <ExternalLink size={15} />
           </a>
