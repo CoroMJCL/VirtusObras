@@ -81,12 +81,24 @@ export default function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-white/10 bg-obsidian px-6 py-4 md:hidden">
+        <nav className="animate-fade-up flex flex-col divide-y divide-white/5 border-t border-white/10 bg-obsidian/90 px-6 py-2 backdrop-blur-xl md:hidden">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="py-2 text-bone/80" onClick={() => setOpen(false)}>
+            <a
+              key={l.href}
+              href={l.href}
+              className="focus-ring py-3.5 text-[15px] text-bone/80 transition-colors hover:text-gold"
+              onClick={() => setOpen(false)}
+            >
               {l.label}
             </a>
           ))}
+          <a
+            href="#contacto"
+            className="focus-ring py-3.5 text-[15px] font-medium text-gold"
+            onClick={() => setOpen(false)}
+          >
+            Solicitar visita
+          </a>
         </nav>
       )}
     </header>

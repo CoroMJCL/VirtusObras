@@ -9,7 +9,7 @@ export default function Hero({ titulo, subtitulo, numeroWhatsapp }) {
           src={heroBg}
           alt=""
           role="presentation"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover object-[78%_center] sm:object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-obsidian/70 via-obsidian/60 to-obsidian" />
         <div className="absolute inset-0 bg-gradient-to-r from-obsidian/90 via-obsidian/30 to-transparent" />

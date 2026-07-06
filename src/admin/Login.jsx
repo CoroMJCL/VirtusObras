@@ -23,8 +23,8 @@ export default function Login() {
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
       <div className="absolute inset-0">
         <img src={loginBg} alt="" role="presentation" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-obsidian/85" />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/70 to-obsidian/40" />
+        <div className="absolute inset-0 bg-obsidian/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
       </div>
 
       <div className="relative w-full max-w-sm">
