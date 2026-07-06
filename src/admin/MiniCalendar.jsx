@@ -11,15 +11,14 @@ function toISODate(date) {
   return date.toISOString().slice(0, 10)
 }
 
-// Calendario mensual simple, sin dependencias externas.
-// markedDates: array de strings 'YYYY-MM-DD' que se muestran con un punto dorado (ej: mantenciones próximas).
 export default function MiniCalendar({ markedDates = [] }) {
   const hoy = new Date()
   const [mesActual, setMesActual] = useState(new Date(hoy.getFullYear(), hoy.getMonth(), 1))
 
-  const primerDiaSemana = (new Date(mesActual.getFullYear(), mesActual.getMonth(), 1).getDay() + 6) % 7 // lunes=0
+  const primerDiaSemana = (new Date(mesActual.getFullYear(), mesActual.getMonth(), 1).getDay() + 6) % 7
   const diasEnMes = new Date(mesActual.getFullYear(), mesActual.getMonth() + 1, 0).getDate()
   const marcados = new Set(markedDates)
+  const esMesActualReal = mesActual.getFullYear() === hoy.getFullYear() && mesActual.getMonth() === hoy.getMonth()
 
   const celdas = []
   for (let i = 0; i < primerDiaSemana; i++) celdas.push(null)
@@ -30,43 +29,44 @@ export default function MiniCalendar({ markedDates = [] }) {
   }
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-charcoal/80 p-5 backdrop-blur-xl">
+    <div className="rounded-2xl border border-[#e5e5e7] bg-white p-5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-sm font-medium text-bone">
-          {MESES[mesActual.getMonth()]} {mesActual.getFullYear()}
+        <p className="text-[14px] font-medium tracking-tight text-[#1d1d1f]">
+          {MESES[mesActual.getMonth()]} <span className="text-[#86868b]">{mesActual.getFullYear()}</span>
         </p>
-        <div className="flex gap-1">
-          <button onClick={() => cambiarMes(-1)} className="focus-ring rounded-lg p-1.5 text-bone/40 hover:bg-white/5 hover:text-gold">
-            <ChevronLeft size={15} />
+        <div className="flex gap-0.5">
+          <button onClick={() => cambiarMes(-1)} className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-[#86868b] transition-colors hover:bg-black/[0.04] hover:text-[#1d1d1f]">
+            <ChevronLeft size={15} strokeWidth={1.75} />
           </button>
-          <button onClick={() => cambiarMes(1)} className="focus-ring rounded-lg p-1.5 text-bone/40 hover:bg-white/5 hover:text-gold">
-            <ChevronRight size={15} />
+          <button onClick={() => cambiarMes(1)} className="focus-ring flex h-7 w-7 items-center justify-center rounded-lg text-[#86868b] transition-colors hover:bg-black/[0.04] hover:text-[#1d1d1f]">
+            <ChevronRight size={15} strokeWidth={1.75} />
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center">
+      <div className="grid grid-cols-7">
         {DIAS.map((d, i) => (
-          <span key={i} className="eyebrow py-1 text-[10px] text-bone/30">{d}</span>
+          <span key={i} className="pb-2 text-center text-[10px] font-medium uppercase tracking-wide text-[#b0b0b5]">
+            {d}
+          </span>
         ))}
         {celdas.map((d, i) => {
           if (!d) return <span key={i} />
-          const fecha = new Date(mesActual.getFullYear(), mesActual.getMonth(), d)
-          const iso = toISODate(fecha)
-          const esHoy = iso === toISODate(hoy)
+          const esHoy = esMesActualReal && d === hoy.getDate()
+          const iso = toISODate(new Date(mesActual.getFullYear(), mesActual.getMonth(), d))
           const tieneMarca = marcados.has(iso)
           return (
-            <div key={i} className="relative flex justify-center py-1">
-              <span
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-xs ${
-                  esHoy ? 'bg-gold-gradient font-semibold text-obsidian' : 'text-bone/70'
+            <div key={i} className="flex flex-col items-center gap-0.5 py-0.5">
+              <button
+                className={`flex h-7 w-7 items-center justify-center rounded-full text-[12.5px] transition-colors ${
+                  esHoy
+                    ? 'bg-[#c9a227] font-semibold text-white'
+                    : 'text-[#1d1d1f]/80 hover:bg-black/[0.04]'
                 }`}
               >
                 {d}
-              </span>
-              {tieneMarca && !esHoy && (
-                <span className="absolute bottom-0.5 h-1 w-1 rounded-full bg-gold" />
-              )}
+              </button>
+              <span className={`h-1 w-1 rounded-full ${tieneMarca && !esHoy ? 'bg-[#c9a227]' : ''}`} />
             </div>
           )
         })}

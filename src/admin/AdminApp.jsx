@@ -15,7 +15,7 @@ export default function AdminApp() {
   const { session, loading } = useAuth()
 
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center bg-obsidian text-bone/40">Cargando…</div>
+    return <div className="flex min-h-screen items-center justify-center bg-[#f5f5f7] text-[#86868b]">Cargando…</div>
   }
 
   if (!session) return <Login />

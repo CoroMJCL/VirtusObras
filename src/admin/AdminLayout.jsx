@@ -26,15 +26,15 @@ export default function AdminLayout() {
   const faltaNombre = session && !session.user?.user_metadata?.nombre
 
   return (
-    <div className="flex min-h-screen bg-[#0c0c0e] text-bone">
+    <div className="flex min-h-screen bg-[#f5f5f7] text-[#1d1d1f]">
       {faltaNombre && <NamePromptModal onSaved={() => {}} />}
 
-      <aside className="flex w-[260px] flex-none flex-col border-r border-white/[0.06] bg-[#111113]">
+      <aside className="flex w-[260px] flex-none flex-col border-r border-[#e5e5e7] bg-white">
         <div className="flex items-center gap-3 px-6 py-7">
           <img src={logo} alt="Virtus Obras" className="h-8 w-8 rounded-full" />
           <div>
-            <p className="text-[13px] font-semibold tracking-tight text-bone">Virtus | Obras</p>
-            <p className="text-[11px] text-bone/35">Panel administrativo</p>
+            <p className="text-[13px] font-semibold tracking-tight text-[#1d1d1f]">Virtus | Obras</p>
+            <p className="text-[11px] text-[#86868b]">Panel administrativo</p>
           </div>
         </div>
 
@@ -47,14 +47,14 @@ export default function AdminLayout() {
               className={({ isActive }) =>
                 `focus-ring flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13.5px] font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-white/[0.07] text-bone shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]'
-                    : 'text-bone/45 hover:bg-white/[0.035] hover:text-bone/80'
+                    ? 'bg-[#c9a227]/10 text-[#1d1d1f]'
+                    : 'text-[#6e6e73] hover:bg-black/[0.03] hover:text-[#1d1d1f]'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
-                  <Icon size={17} strokeWidth={1.75} className={isActive ? 'text-gold' : ''} />
+                  <Icon size={17} strokeWidth={1.75} className={isActive ? 'text-[#a8841b]' : ''} />
                   {label}
                 </>
               )}
@@ -64,7 +64,7 @@ export default function AdminLayout() {
 
         <button
           onClick={salir}
-          className="focus-ring m-3 flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13.5px] font-medium text-bone/40 transition-colors hover:bg-white/[0.035] hover:text-red-400"
+          className="focus-ring m-3 flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13.5px] font-medium text-[#6e6e73] transition-colors hover:bg-black/[0.03] hover:text-red-600"
         >
           <LogOut size={17} strokeWidth={1.75} />
           Salir

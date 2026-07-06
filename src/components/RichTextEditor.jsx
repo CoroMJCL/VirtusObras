@@ -35,15 +35,15 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Escribe
   ]
 
   return (
-    <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
-      <div className="flex items-center gap-1 border-b border-white/10 bg-white/[0.02] px-2 py-1.5">
+    <div className="overflow-hidden rounded-xl border border-[#e5e5e7] bg-[#f5f5f7]">
+      <div className="flex items-center gap-1 border-b border-[#e5e5e7] bg-[#fafafa] px-2 py-1.5">
         {BOTONES.map(({ icon: Icon, comando, label }) => (
           <button
             key={comando}
             type="button"
             title={label}
             onMouseDown={(e) => { e.preventDefault(); ejecutar(comando) }}
-            className="focus-ring rounded-lg p-2 text-bone/60 hover:bg-white/5 hover:text-gold"
+            className="focus-ring rounded-lg p-2 text-[#6e6e73] hover:bg-black/[0.04] hover:text-gold"
           >
             <Icon size={15} />
           </button>
@@ -52,7 +52,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Escribe
           type="button"
           title="Insertar enlace"
           onMouseDown={(e) => { e.preventDefault(); insertarLink() }}
-          className="focus-ring rounded-lg p-2 text-bone/60 hover:bg-white/5 hover:text-gold"
+          className="focus-ring rounded-lg p-2 text-[#6e6e73] hover:bg-black/[0.04] hover:text-gold"
         >
           <LinkIcon size={15} />
         </button>
@@ -64,7 +64,7 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Escribe
         onInput={() => onChange(editorRef.current?.innerHTML || '')}
         onBlur={() => onChange(editorRef.current?.innerHTML || '')}
         data-placeholder={placeholder}
-        className="rich-text-editable min-h-[160px] px-4 py-3 text-sm text-bone focus:outline-none [&_a]:text-gold [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+        className="rich-text-editable min-h-[160px] px-4 py-3 text-sm text-[#1d1d1f] focus:outline-none [&_a]:text-gold [&_a]:underline [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
         suppressContentEditableWarning
       />
     </div>

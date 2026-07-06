@@ -139,17 +139,17 @@ export default function PresupuestoEditor() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <button onClick={() => navigate('/admin/presupuestos')} className="focus-ring mb-6 flex items-center gap-2 text-sm text-bone/50 hover:text-bone">
+      <button onClick={() => navigate('/admin/presupuestos')} className="focus-ring mb-6 flex items-center gap-2 text-sm text-[#86868b] hover:text-[#1d1d1f]">
         <ArrowLeft size={16} /> Volver a presupuestos
       </button>
 
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-display text-2xl font-light text-bone">
+        <h1 className="font-display text-2xl font-light text-[#1d1d1f]">
           {esNuevo ? 'Nuevo presupuesto' : presupuesto.folio}
         </h1>
         {!esNuevo && (
           <div className="flex gap-2">
-            <button onClick={descargarPDF} className="focus-ring flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-bone/80 hover:border-gold/50 hover:text-gold">
+            <button onClick={descargarPDF} className="focus-ring flex items-center gap-2 rounded-full border border-[#d0d0d5] px-4 py-2 text-sm text-[#4a4a4f] hover:border-gold/50 hover:text-gold">
               <Download size={15} /> PDF
             </button>
             <button onClick={enviarPorCorreo} disabled={enviandoCorreo} className="focus-ring flex items-center gap-2 rounded-full bg-gold-gradient px-4 py-2 text-sm font-medium text-obsidian disabled:opacity-50">
@@ -165,29 +165,29 @@ export default function PresupuestoEditor() {
         </div>
       )}
 
-      <div className="space-y-6 rounded-2xl border border-white/10 bg-charcoal p-7">
+      <div className="space-y-6 rounded-2xl border border-[#e5e5e7] bg-white p-7">
         <div>
-          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Cliente</label>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Cliente</label>
           <select
             value={presupuesto.cliente_id || ''}
             onChange={(e) => setPresupuesto({ ...presupuesto, cliente_id: e.target.value })}
-            className="focus-ring w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone/80"
+            className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#4a4a4f]"
           >
-            <option value="" className="bg-obsidian">Selecciona un cliente…</option>
+            <option value="" className="bg-white">Selecciona un cliente…</option>
             {clientes.map((c) => (
-              <option key={c.id} value={c.id} className="bg-obsidian">{c.nombre} {c.telefono ? `· ${c.telefono}` : ''}</option>
+              <option key={c.id} value={c.id} className="bg-white">{c.nombre} {c.telefono ? `· ${c.telefono}` : ''}</option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Tipo de trabajo</label>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Tipo de trabajo</label>
           <div className="flex flex-wrap gap-2">
             {TIPOS_TRABAJO.map((t) => (
               <button
                 key={t} type="button" onClick={() => toggleTipoTrabajo(t)}
                 className={`focus-ring rounded-full border px-3.5 py-1.5 text-xs ${
-                  presupuesto.tipo_trabajo?.includes(t) ? 'border-gold bg-gold/15 text-gold' : 'border-white/15 text-bone/60'
+                  presupuesto.tipo_trabajo?.includes(t) ? 'border-gold bg-gold/15 text-gold' : 'border-[#d0d0d5] text-[#6e6e73]'
                 }`}
               >
                 {t}
@@ -197,17 +197,17 @@ export default function PresupuestoEditor() {
         </div>
 
         <div>
-          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Descripción del trabajo</label>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Descripción del trabajo</label>
           <textarea
             rows={3} value={presupuesto.descripcion || ''}
             onChange={(e) => setPresupuesto({ ...presupuesto, descripcion: e.target.value })}
-            className="focus-ring w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone"
+            className="focus-ring w-full resize-none rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]"
           />
         </div>
 
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <label className="block text-xs uppercase tracking-wide text-bone/40">Ítems</label>
+            <label className="block text-xs uppercase tracking-wide text-[#86868b]">Ítems</label>
             <button onClick={agregarItem} className="focus-ring flex items-center gap-1 text-xs text-gold hover:underline">
               <Plus size={14} /> Agregar ítem
             </button>
@@ -218,19 +218,19 @@ export default function PresupuestoEditor() {
                 <input
                   placeholder="Descripción" value={item.descripcion}
                   onChange={(e) => actualizarItem(idx, 'descripcion', e.target.value)}
-                  className="focus-ring col-span-6 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-bone"
+                  className="focus-ring col-span-6 rounded-lg border border-[#e5e5e7] bg-[#f5f5f7] px-3 py-2 text-sm text-[#1d1d1f]"
                 />
                 <input
                   type="number" min="0" placeholder="Cant." value={item.cantidad}
                   onChange={(e) => actualizarItem(idx, 'cantidad', e.target.value)}
-                  className="focus-ring col-span-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-bone"
+                  className="focus-ring col-span-2 rounded-lg border border-[#e5e5e7] bg-[#f5f5f7] px-3 py-2 text-sm text-[#1d1d1f]"
                 />
                 <input
                   type="number" min="0" placeholder="Precio unit." value={item.precio_unitario}
                   onChange={(e) => actualizarItem(idx, 'precio_unitario', e.target.value)}
-                  className="focus-ring col-span-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-bone"
+                  className="focus-ring col-span-3 rounded-lg border border-[#e5e5e7] bg-[#f5f5f7] px-3 py-2 text-sm text-[#1d1d1f]"
                 />
-                <button onClick={() => quitarItem(idx)} className="focus-ring col-span-1 flex items-center justify-center text-bone/40 hover:text-red-400">
+                <button onClick={() => quitarItem(idx)} className="focus-ring col-span-1 flex items-center justify-center text-[#86868b] hover:text-red-400">
                   <Trash2 size={16} />
                 </button>
               </div>
@@ -239,14 +239,14 @@ export default function PresupuestoEditor() {
         </div>
 
         <div>
-          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Excepciones</label>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Excepciones</label>
           <textarea
             rows={3} value={presupuesto.excepciones || ''}
             onChange={(e) => setPresupuesto({ ...presupuesto, excepciones: e.target.value })}
             placeholder="Ej: Si al abrir el muro se detecta cañería en mal estado, el reemplazo tiene un costo adicional de $XX.XXX no incluido en este presupuesto."
-            className="focus-ring w-full resize-none rounded-xl border border-gold/25 bg-gold/[0.04] px-4 py-2.5 text-sm text-bone placeholder:text-bone/25"
+            className="focus-ring w-full resize-none rounded-xl border border-gold/25 bg-gold/[0.04] px-4 py-2.5 text-sm text-[#1d1d1f] placeholder:text-[#b0b0b5]"
           />
-          <p className="mt-1.5 text-xs text-bone/35">
+          <p className="mt-1.5 text-xs text-[#a0a0a5]">
             Trabajos que no están incluidos en el precio de arriba, pero que se pueden realizar aparte con costo
             adicional. Aparece destacado en el PDF para que el cliente lo vea antes de aceptar.
           </p>
@@ -254,40 +254,40 @@ export default function PresupuestoEditor() {
 
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Fecha de creación</label>
+            <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Fecha de creación</label>
             <input
               type="date"
               value={(presupuesto.creado_en || new Date().toISOString()).slice(0, 10)}
               onChange={(e) => setPresupuesto({ ...presupuesto, creado_en: e.target.value })}
-              className="focus-ring w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone [color-scheme:dark]"
+              className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f] [color-scheme:dark]"
             />
           </div>
           <div>
-            <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Descuento (CLP)</label>
+            <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Descuento (CLP)</label>
             <input
               type="number" min="0" value={presupuesto.descuento}
               onChange={(e) => setPresupuesto({ ...presupuesto, descuento: e.target.value })}
-              className="focus-ring w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone"
+              className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]"
             />
           </div>
           <div>
-            <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Validez (días)</label>
+            <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Validez (días)</label>
             <input
               type="number" min="1" value={presupuesto.validez_dias}
               onChange={(e) => setPresupuesto({ ...presupuesto, validez_dias: e.target.value })}
-              className="focus-ring w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-bone"
+              className="focus-ring w-full rounded-xl border border-[#e5e5e7] bg-[#f5f5f7] px-4 py-2.5 text-sm text-[#1d1d1f]"
             />
           </div>
         </div>
 
         <div>
-          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Etapa del expediente</label>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-[#86868b]">Etapa del expediente</label>
           <div className="flex gap-2">
             {['cliente', 'presupuesto', 'servicio', 'cierre'].map((e) => (
               <button
                 key={e} type="button" onClick={() => setPresupuesto({ ...presupuesto, estado: e })}
                 className={`focus-ring flex-1 rounded-full border py-2 text-xs capitalize ${
-                  presupuesto.estado === e ? 'border-gold bg-gold/15 text-gold' : 'border-white/15 text-bone/50'
+                  presupuesto.estado === e ? 'border-gold bg-gold/15 text-gold' : 'border-[#d0d0d5] text-[#86868b]'
                 }`}
               >
                 {e}
@@ -296,11 +296,11 @@ export default function PresupuestoEditor() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-t border-white/10 pt-5">
-          <div className="text-sm text-bone/50">
+        <div className="flex items-center justify-between border-t border-[#e5e5e7] pt-5">
+          <div className="text-sm text-[#86868b]">
             Subtotal: {formatCLP(subtotal)} {presupuesto.descuento > 0 && `· Descuento: ${formatCLP(presupuesto.descuento)}`}
           </div>
-          <div className="text-xl font-light text-bone">{formatCLP(total)}</div>
+          <div className="text-xl font-light text-[#1d1d1f]">{formatCLP(total)}</div>
         </div>
 
         <button onClick={guardar} disabled={guardando} className="focus-ring w-full rounded-full bg-gold-gradient py-3 text-sm font-medium text-obsidian disabled:opacity-50">
