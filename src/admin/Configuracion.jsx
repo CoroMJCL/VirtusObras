@@ -1,10 +1,55 @@
 import { useEffect, useState } from 'react'
+import { Camera } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient.js'
+import { useAuth } from '../hooks/useAuth.js'
 import RichTextEditor from '../components/RichTextEditor.jsx'
 
 const inputClass = "focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-[14px] text-[#f2f0ea] backdrop-blur-xl transition-colors focus:border-[#c9a227]/60 focus:outline-none focus:ring-2 focus:ring-[#c9a227]/10"
 const labelClass = "mb-1.5 block text-[13px] font-medium text-[#f2f0ea]"
 const helpClass = "mt-1.5 text-[12.5px] text-[#f2f0ea59]"
+
+function PerfilFoto() {
+  const { session } = useAuth()
+  const [subiendo, setSubiendo] = useState(false)
+  const avatarUrl = session?.user?.user_metadata?.avatar_url
+  const nombre = session?.user?.user_metadata?.nombre
+  const inicial = (nombre || session?.user?.email || 'A').charAt(0).toUpperCase()
+
+  const subirFoto = async (file) => {
+    if (!file || !session?.user) return
+    setSubiendo(true)
+    const ext = file.name.split('.').pop()
+    const path = `perfiles/${session.user.id}-${Date.now()}.${ext}`
+    const { error: uploadError } = await supabase.storage.from('proyecto-fotos').upload(path, file)
+    if (!uploadError) {
+      const { data: urlData } = supabase.storage.from('proyecto-fotos').getPublicUrl(path)
+      await supabase.auth.updateUser({ data: { avatar_url: urlData.publicUrl } })
+    }
+    setSubiendo(false)
+  }
+
+  return (
+    <div className="flex items-center gap-4">
+      <div className="relative">
+        {avatarUrl ? (
+          <img src={avatarUrl} alt="Foto de perfil" className="h-16 w-16 rounded-full object-cover ring-1 ring-white/10" />
+        ) : (
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gold-gradient text-xl font-semibold text-[#0c0c0e]">
+            {inicial}
+          </div>
+        )}
+        <label className="focus-ring absolute -bottom-1 -right-1 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-[#1a1a1c] text-[#f2f0ea73] transition-colors hover:text-gold">
+          <Camera size={13} />
+          <input type="file" accept="image/*" hidden onChange={(e) => subirFoto(e.target.files?.[0])} />
+        </label>
+      </div>
+      <div>
+        <p className="text-[13.5px] font-medium text-[#f2f0ea]">{subiendo ? 'Subiendo…' : 'Foto de perfil'}</p>
+        <p className="text-[12.5px] text-[#f2f0ea59]">Se muestra en el menú lateral del panel.</p>
+      </div>
+    </div>
+  )
+}
 
 function Seccion({ titulo, descripcion, children }) {
   return (
@@ -51,6 +96,10 @@ export default function Configuracion() {
       </div>
 
       <form onSubmit={guardar} className="space-y-6">
+        <Seccion titulo="Perfil" descripcion="Tu foto y nombre dentro del panel.">
+          <PerfilFoto />
+        </Seccion>
+
         <Seccion titulo="Contacto" descripcion="Cómo te contactan los visitantes de la página principal.">
           <div>
             <label className={labelClass}>WhatsApp</label>

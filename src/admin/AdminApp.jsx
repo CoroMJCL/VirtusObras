@@ -6,6 +6,7 @@ import Dashboard from './Dashboard.jsx'
 import Clientes from './Clientes.jsx'
 import Presupuestos from './Presupuestos.jsx'
 import PresupuestoEditor from './PresupuestoEditor.jsx'
+import Boletas from './Boletas.jsx'
 import Proyectos from './Proyectos.jsx'
 import Mantenciones from './Mantenciones.jsx'
 import Mensajes from './Mensajes.jsx'
@@ -27,6 +28,7 @@ export default function AdminApp() {
         <Route path="clientes" element={<Clientes />} />
         <Route path="presupuestos" element={<Presupuestos />} />
         <Route path="presupuestos/:id" element={<PresupuestoEditor />} />
+        <Route path="boletas" element={<Boletas />} />
         <Route path="proyectos" element={<Proyectos />} />
         <Route path="mantenciones" element={<Mantenciones />} />
         <Route path="mensajes" element={<Mensajes />} />

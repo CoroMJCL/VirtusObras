@@ -4,6 +4,10 @@ import { supabase } from '../lib/supabaseClient.js'
 import { useAuth } from '../hooks/useAuth.js'
 import { formatCLP } from '../lib/formatters.js'
 import DatePickerButton from './DatePickerButton.jsx'
+import { BarraMensual, DonaEstados } from './DashboardCharts.jsx'
+
+const MESES_CORTOS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+const NOMBRES_ESTADO = { cliente: 'Cliente', presupuesto: 'Presupuesto', servicio: 'Servicio', cierre: 'Cierre' }
 
 function fechaHoyCapitalizada() {
   const texto = new Date().toLocaleDateString('es-CL', {
@@ -19,16 +23,42 @@ function saludoSegunHora() {
   return 'Buenas noches'
 }
 
+function agruparPorMes(presupuestos) {
+  const hoy = new Date()
+  const meses = []
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1)
+    meses.push({ key: `${d.getFullYear()}-${d.getMonth()}`, mes: MESES_CORTOS[d.getMonth()], cantidad: 0 })
+  }
+  presupuestos.forEach((p) => {
+    const d = new Date(p.creado_en)
+    const key = `${d.getFullYear()}-${d.getMonth()}`
+    const bucket = meses.find((m) => m.key === key)
+    if (bucket) bucket.cantidad += 1
+  })
+  return meses
+}
+
+function agruparPorEstado(presupuestos) {
+  const conteo = { cliente: 0, presupuesto: 0, servicio: 0, cierre: 0 }
+  presupuestos.forEach((p) => { if (conteo[p.estado] !== undefined) conteo[p.estado] += 1 })
+  return Object.entries(conteo)
+    .filter(([, v]) => v > 0)
+    .map(([key, value]) => ({ key, value, name: NOMBRES_ESTADO[key] }))
+}
+
 export default function Dashboard() {
   const { session } = useAuth()
   const [stats, setStats] = useState(null)
   const [fechasMantencion, setFechasMantencion] = useState([])
+  const [datosMensuales, setDatosMensuales] = useState([])
+  const [datosEstado, setDatosEstado] = useState([])
 
   useEffect(() => {
     const cargar = async () => {
       const [clientes, presupuestos, mantenciones, mensajes] = await Promise.all([
         supabase.from('clientes').select('id', { count: 'exact', head: true }),
-        supabase.from('presupuestos').select('id, estado, total, aprobado'),
+        supabase.from('presupuestos').select('id, estado, total, aprobado, creado_en'),
         supabase.from('mantenciones').select('id, proxima_fecha, notificado').eq('activo', true),
         supabase.from('mensajes_contacto').select('id', { count: 'exact', head: true }).eq('leido', false),
       ])
@@ -50,6 +80,8 @@ export default function Dashboard() {
       })
 
       setFechasMantencion((mantenciones.data || []).map((m) => m.proxima_fecha))
+      setDatosMensuales(agruparPorMes(presupuestos.data || []))
+      setDatosEstado(agruparPorEstado(presupuestos.data || []))
     }
     cargar()
   }, [])
@@ -88,6 +120,15 @@ export default function Dashboard() {
             <p className="mt-1 text-[13px] text-bone/45">{label}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-5">
+        <div className="lg:col-span-3">
+          <BarraMensual datos={datosMensuales} />
+        </div>
+        <div className="lg:col-span-2">
+          <DonaEstados datos={datosEstado} />
+        </div>
       </div>
 
       {stats?.mensajesNuevos > 0 && (

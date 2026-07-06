@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Users, FileText, FolderKanban, BellRing, Mail, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, Users, FileText, Receipt, FolderKanban, BellRing, Mail, Settings, LogOut } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth.js'
 import logo from '../assets/logo-icon.png'
 import NamePromptModal from './NamePromptModal.jsx'
@@ -8,6 +8,7 @@ const NAV = [
   { to: '/admin', label: 'Resumen', icon: LayoutDashboard, end: true },
   { to: '/admin/clientes', label: 'Clientes', icon: Users },
   { to: '/admin/presupuestos', label: 'Presupuestos', icon: FileText },
+  { to: '/admin/boletas', label: 'Boletas', icon: Receipt },
   { to: '/admin/proyectos', label: 'Proyectos', icon: FolderKanban },
   { to: '/admin/mantenciones', label: 'Mantenciones', icon: BellRing },
   { to: '/admin/mensajes', label: 'Mensajes', icon: Mail },
@@ -25,6 +26,7 @@ export default function AdminLayout() {
 
   const faltaNombre = session && !session.user?.user_metadata?.nombre
   const nombre = session?.user?.user_metadata?.nombre
+  const avatarUrl = session?.user?.user_metadata?.avatar_url
   const inicial = (nombre || session?.user?.email || 'A').charAt(0).toUpperCase()
 
   return (
@@ -49,8 +51,8 @@ export default function AdminLayout() {
 
         {nombre && (
           <div className="mx-4 mb-5 flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3">
-            <div className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-gold-gradient text-[13px] font-semibold text-[#1a1a1a]">
-              {inicial}
+            <div className="flex h-9 w-9 flex-none items-center justify-center overflow-hidden rounded-full bg-gold-gradient text-[13px] font-semibold text-[#1a1a1a]">
+              {avatarUrl ? <img src={avatarUrl} alt="" className="h-full w-full object-cover" /> : inicial}
             </div>
             <div className="min-w-0">
               <p className="truncate text-[13px] font-medium text-bone">{nombre}</p>
