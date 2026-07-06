@@ -153,6 +153,32 @@ export function generarPresupuestoPDF({ presupuesto, cliente, logoDataUrl }) {
   doc.text('TOTAL', totalsX, y + 4)
   doc.text(formatCLP(presupuesto.total), pageWidth - margin, y + 4, { align: 'right' })
 
+  // ---- Excepciones (trabajos no incluidos, costo aparte) ----
+  if (presupuesto.excepciones && presupuesto.excepciones.trim() !== '') {
+    y += 40
+    if (y > 650) { doc.addPage(); y = 56 }
+
+    const excepLines = doc.splitTextToSize(presupuesto.excepciones, pageWidth - margin * 2 - 24)
+    const boxHeight = excepLines.length * 13 + 30
+
+    doc.setFillColor(252, 246, 227) // fondo dorado muy suave
+    doc.setDrawColor(...GOLD)
+    doc.setLineWidth(0.8)
+    doc.roundedRect(margin, y, pageWidth - margin * 2, boxHeight, 4, 4, 'FD')
+
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(9.5)
+    doc.setTextColor(...GOLD)
+    doc.text('EXCEPCIONES — NO INCLUIDO EN ESTE PRESUPUESTO', margin + 12, y + 16)
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(9.5)
+    doc.setTextColor(60, 50, 20)
+    doc.text(excepLines, margin + 12, y + 30)
+
+    y += boxHeight
+  }
+
   // ---- Pie de página ----
   const pageCount = doc.internal.getNumberOfPages()
   for (let i = 1; i <= pageCount; i++) {

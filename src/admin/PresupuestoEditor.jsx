@@ -31,6 +31,7 @@ export default function PresupuestoEditor() {
     tipo_trabajo: [],
     estado: 'presupuesto',
     descripcion: '',
+    excepciones: '',
     items: [ITEM_VACIO()],
     descuento: 0,
     validez_dias: 15,
@@ -235,6 +236,20 @@ export default function PresupuestoEditor() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-xs uppercase tracking-wide text-bone/40">Excepciones</label>
+          <textarea
+            rows={3} value={presupuesto.excepciones || ''}
+            onChange={(e) => setPresupuesto({ ...presupuesto, excepciones: e.target.value })}
+            placeholder="Ej: Si al abrir el muro se detecta cañería en mal estado, el reemplazo tiene un costo adicional de $XX.XXX no incluido en este presupuesto."
+            className="focus-ring w-full resize-none rounded-xl border border-gold/25 bg-gold/[0.04] px-4 py-2.5 text-sm text-bone placeholder:text-bone/25"
+          />
+          <p className="mt-1.5 text-xs text-bone/35">
+            Trabajos que no están incluidos en el precio de arriba, pero que se pueden realizar aparte con costo
+            adicional. Aparece destacado en el PDF para que el cliente lo vea antes de aceptar.
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
