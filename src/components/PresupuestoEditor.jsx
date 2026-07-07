@@ -18,7 +18,15 @@ async function logoComoBase64() {
   })
 }
 
-const ITEM_VACIO = () => ({ id: crypto.randomUUID(), descripcion: '', cantidad: 1, precio_unitario: 0 })
+const UNIDADES = [
+  { valor: 'UN', label: 'UN — Unidad' },
+  { valor: 'M2', label: 'M2 — Metro cuadrado' },
+  { valor: 'M3', label: 'M3 — Metro cúbico' },
+  { valor: 'ML', label: 'ML — Metro lineal' },
+  { valor: 'GL', label: 'GL — Global' },
+]
+
+const ITEM_VACIO = () => ({ id: crypto.randomUUID(), descripcion: '', unidad: 'UN', cantidad: 1, precio_unitario: 0 })
 
 export default function PresupuestoEditor() {
   const { id } = useParams()
@@ -139,17 +147,17 @@ export default function PresupuestoEditor() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <button onClick={() => navigate('/admin/presupuestos')} className="focus-ring mb-6 flex items-center gap-2 text-sm text-[#86868b] hover:text-[#1d1d1f]">
+      <button onClick={() => navigate('/admin/presupuestos')} className="focus-ring mb-6 flex items-center gap-2 text-sm text-[#f2f0ea73] hover:text-[#f2f0ea]">
         <ArrowLeft size={16} /> Volver a presupuestos
       </button>
 
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="font-display text-2xl font-light text-[#1d1d1f]">
+        <h1 className="font-display text-2xl font-light text-[#f2f0ea]">
           {esNuevo ? 'Nuevo presupuesto' : presupuesto.folio}
         </h1>
         {!esNuevo && (
           <div className="flex gap-2">
-            <button onClick={descargarPDF} className="focus-ring flex items-center gap-2 rounded-full border border-[#d0d0d5] px-4 py-2 text-sm text-[#4a4a4f] hover:border-gold/50 hover:text-gold">
+            <button onClick={descargarPDF} className="focus-ring flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-[#f2f0eab3] hover:border-gold/50 hover:text-gold">
               <Download size={15} /> PDF
             </button>
             <button onClick={enviarPorCorreo} disabled={enviandoCorreo} className="focus-ring flex items-center gap-2 rounded-full bg-gold-gradient px-4 py-2 text-sm font-medium text-obsidian disabled:opacity-50">
@@ -160,34 +168,34 @@ export default function PresupuestoEditor() {
       </div>
 
       {mensaje && (
-        <div className={`mb-5 rounded-xl px-4 py-3 text-sm ${mensaje.tipo === 'ok' ? 'bg-emerald-500/10 text-emerald-700' : 'bg-red-500/10 text-red-700'}`}>
+        <div className={`mb-5 rounded-xl px-4 py-3 text-sm ${mensaje.tipo === 'ok' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
           {mensaje.texto}
         </div>
       )}
 
-      <div className="space-y-6 rounded-2xl border border-[#e5e5e7] bg-white p-7">
+      <div className="space-y-6 rounded-2xl border border-white/10 bg-white/[0.04] p-7">
         <div>
-          <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Cliente</label>
+          <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Cliente</label>
           <select
             value={presupuesto.cliente_id || ''}
             onChange={(e) => setPresupuesto({ ...presupuesto, cliente_id: e.target.value })}
-            className="focus-ring w-full rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#4a4a4f]"
+            className="focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0eab3]"
           >
-            <option value="" className="bg-white">Selecciona un cliente…</option>
+            <option value="" className="bg-[#141416]">Selecciona un cliente…</option>
             {clientes.map((c) => (
-              <option key={c.id} value={c.id} className="bg-white">{c.nombre} {c.telefono ? `· ${c.telefono}` : ''}</option>
+              <option key={c.id} value={c.id} className="bg-[#141416]">{c.nombre} {c.telefono ? `· ${c.telefono}` : ''}</option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Tipo de trabajo</label>
+          <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Tipo de trabajo</label>
           <div className="flex flex-wrap gap-2">
             {TIPOS_TRABAJO.map((t) => (
               <button
                 key={t} type="button" onClick={() => toggleTipoTrabajo(t)}
                 className={`focus-ring rounded-full border px-3.5 py-1.5 text-xs ${
-                  presupuesto.tipo_trabajo?.includes(t) ? 'border-gold bg-gold/15 text-gold' : 'border-[#d0d0d5] text-[#6e6e73]'
+                  presupuesto.tipo_trabajo?.includes(t) ? 'border-gold bg-gold/15 text-gold' : 'border-white/15 text-[#f2f0ea99]'
                 }`}
               >
                 {t}
@@ -197,56 +205,67 @@ export default function PresupuestoEditor() {
         </div>
 
         <div>
-          <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Descripción del trabajo</label>
+          <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Descripción del trabajo</label>
           <textarea
             rows={3} value={presupuesto.descripcion || ''}
             onChange={(e) => setPresupuesto({ ...presupuesto, descripcion: e.target.value })}
-            className="focus-ring w-full resize-none rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1d1d1f]"
+            className="focus-ring w-full resize-none rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0ea]"
           />
         </div>
 
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <label className="block text-[13px] font-medium text-[#1d1d1f]">Ítems</label>
+            <label className="block text-[13px] font-medium text-[#f2f0ea]">Ítems</label>
             <button onClick={agregarItem} className="focus-ring flex items-center gap-1 text-xs text-gold hover:underline">
               <Plus size={14} /> Agregar ítem
             </button>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {presupuesto.items.map((item, idx) => (
-              <div key={item.id} className="grid grid-cols-12 gap-2">
+              <div key={item.id} className="rounded-lg border border-white/10 bg-white/[0.02] p-2.5">
                 <input
                   placeholder="Descripción" value={item.descripcion}
                   onChange={(e) => actualizarItem(idx, 'descripcion', e.target.value)}
-                  className="focus-ring col-span-6 rounded-lg border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#1d1d1f]"
+                  className="focus-ring mb-2 w-full rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea]"
                 />
-                <input
-                  type="number" min="0" placeholder="Cant." value={item.cantidad}
-                  onChange={(e) => actualizarItem(idx, 'cantidad', e.target.value)}
-                  className="focus-ring col-span-2 rounded-lg border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#1d1d1f]"
-                />
-                <input
-                  type="number" min="0" placeholder="Precio unit." value={item.precio_unitario}
-                  onChange={(e) => actualizarItem(idx, 'precio_unitario', e.target.value)}
-                  className="focus-ring col-span-3 rounded-lg border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#1d1d1f]"
-                />
-                <button onClick={() => quitarItem(idx)} className="focus-ring col-span-1 flex items-center justify-center text-[#86868b] hover:text-red-600">
-                  <Trash2 size={16} />
-                </button>
+                <div className="grid grid-cols-12 gap-2">
+                  <select
+                    value={item.unidad || 'UN'} onChange={(e) => actualizarItem(idx, 'unidad', e.target.value)}
+                    title="Unidad de medida"
+                    className="focus-ring col-span-4 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-2 py-2 text-sm text-[#f2f0eab3] sm:col-span-3"
+                  >
+                    {UNIDADES.map((u) => (
+                      <option key={u.valor} value={u.valor} className="bg-[#141416]">{u.label}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="number" min="0" step="0.01" placeholder="Cant." value={item.cantidad}
+                    onChange={(e) => actualizarItem(idx, 'cantidad', e.target.value)}
+                    className="focus-ring col-span-3 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea] sm:col-span-2"
+                  />
+                  <input
+                    type="number" min="0" placeholder="Precio unit." value={item.precio_unitario}
+                    onChange={(e) => actualizarItem(idx, 'precio_unitario', e.target.value)}
+                    className="focus-ring col-span-4 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea] sm:col-span-6"
+                  />
+                  <button onClick={() => quitarItem(idx)} className="focus-ring col-span-1 flex items-center justify-center text-[#f2f0ea73] hover:text-red-400">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
         <div>
-          <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Excepciones</label>
+          <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Excepciones</label>
           <textarea
             rows={3} value={presupuesto.excepciones || ''}
             onChange={(e) => setPresupuesto({ ...presupuesto, excepciones: e.target.value })}
             placeholder="Ej: Si al abrir el muro se detecta cañería en mal estado, el reemplazo tiene un costo adicional de $XX.XXX no incluido en este presupuesto."
-            className="focus-ring w-full resize-none rounded-xl border border-gold/25 bg-gold/[0.04] px-4 py-2.5 text-sm text-[#1d1d1f] placeholder:text-[#b0b0b5]"
+            className="focus-ring w-full resize-none rounded-xl border border-gold/25 bg-gold/[0.04] px-4 py-2.5 text-sm text-[#f2f0ea] placeholder:text-[#f2f0ea4d]"
           />
-          <p className="mt-1.5 text-xs text-[#a0a0a5]">
+          <p className="mt-1.5 text-xs text-[#f2f0ea59]">
             Trabajos que no están incluidos en el precio de arriba, pero que se pueden realizar aparte con costo
             adicional. Aparece destacado en el PDF para que el cliente lo vea antes de aceptar.
           </p>
@@ -254,40 +273,40 @@ export default function PresupuestoEditor() {
 
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Fecha de creación</label>
+            <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Fecha de creación</label>
             <input
               type="date"
               value={(presupuesto.creado_en || new Date().toISOString()).slice(0, 10)}
               onChange={(e) => setPresupuesto({ ...presupuesto, creado_en: e.target.value })}
-              className="focus-ring w-full rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1d1d1f] [color-scheme:dark]"
+              className="focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0ea] [color-scheme:dark]"
             />
           </div>
           <div>
-            <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Descuento (CLP)</label>
+            <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Descuento (CLP)</label>
             <input
               type="number" min="0" value={presupuesto.descuento}
               onChange={(e) => setPresupuesto({ ...presupuesto, descuento: e.target.value })}
-              className="focus-ring w-full rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1d1d1f]"
+              className="focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0ea]"
             />
           </div>
           <div>
-            <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Validez (días)</label>
+            <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Validez (días)</label>
             <input
               type="number" min="1" value={presupuesto.validez_dias}
               onChange={(e) => setPresupuesto({ ...presupuesto, validez_dias: e.target.value })}
-              className="focus-ring w-full rounded-xl border border-[#d8d8dc] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] focus:border-[#c9a227] focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#1d1d1f]"
+              className="focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0ea]"
             />
           </div>
         </div>
 
         <div>
-          <label className="mb-2 block text-[13px] font-medium text-[#1d1d1f]">Etapa del expediente</label>
+          <label className="mb-2 block text-[13px] font-medium text-[#f2f0ea]">Etapa del expediente</label>
           <div className="flex gap-2">
             {['cliente', 'presupuesto', 'servicio', 'cierre'].map((e) => (
               <button
                 key={e} type="button" onClick={() => setPresupuesto({ ...presupuesto, estado: e })}
                 className={`focus-ring flex-1 rounded-full border py-2 text-xs capitalize ${
-                  presupuesto.estado === e ? 'border-gold bg-gold/15 text-gold' : 'border-[#d0d0d5] text-[#86868b]'
+                  presupuesto.estado === e ? 'border-gold bg-gold/15 text-gold' : 'border-white/15 text-[#f2f0ea73]'
                 }`}
               >
                 {e}
@@ -296,11 +315,11 @@ export default function PresupuestoEditor() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-t border-[#e5e5e7] pt-5">
-          <div className="text-sm text-[#86868b]">
+        <div className="flex items-center justify-between border-t border-white/10 pt-5">
+          <div className="text-sm text-[#f2f0ea73]">
             Subtotal: {formatCLP(subtotal)} {presupuesto.descuento > 0 && `· Descuento: ${formatCLP(presupuesto.descuento)}`}
           </div>
-          <div className="text-xl font-light text-[#1d1d1f]">{formatCLP(total)}</div>
+          <div className="text-xl font-light text-[#f2f0ea]">{formatCLP(total)}</div>
         </div>
 
         <button onClick={guardar} disabled={guardando} className="focus-ring w-full rounded-full bg-gold-gradient py-3 text-sm font-medium text-obsidian disabled:opacity-50">
