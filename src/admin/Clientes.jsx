@@ -67,7 +67,8 @@ export default function Clientes() {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-white/10">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
           <thead className="bg-white/[0.03] text-left text-[11px] font-semibold uppercase tracking-wide text-[#f2f0ea73] border-b border-white/10">
             <tr>
               <th className="px-5 py-3 font-normal">Nombre</th>
@@ -109,6 +110,7 @@ export default function Clientes() {
           </tbody>
         </table>
       </div>
+      </div>
 
       {editando && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6">
@@ -141,9 +143,9 @@ export default function Clientes() {
                 onChange={(e) => setEditando({ ...editando, region: e.target.value, comuna: '' })}
                 className="focus-ring rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0eab3]"
               >
-                <option value="" className="bg-white/[0.04]">Región…</option>
+                <option value="" className="bg-[#141416]">Región…</option>
                 {REGIONES_CHILE.map((r) => (
-                  <option key={r.region} value={r.region} className="bg-white/[0.04]">{r.region}</option>
+                  <option key={r.region} value={r.region} className="bg-[#141416]">{r.region}</option>
                 ))}
               </select>
               <select
@@ -152,16 +154,16 @@ export default function Clientes() {
                 disabled={!editando.region}
                 className="focus-ring rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0eab3] disabled:opacity-40"
               >
-                <option value="" className="bg-white/[0.04]">Comuna…</option>
+                <option value="" className="bg-[#141416]">Comuna…</option>
                 {comunasDeRegion(editando.region).map((c) => (
-                  <option key={c} value={c} className="bg-white/[0.04]">{c}</option>
+                  <option key={c} value={c} className="bg-[#141416]">{c}</option>
                 ))}
               </select>
               <select value={editando.contacto_preferido} onChange={(e) => setEditando({ ...editando, contacto_preferido: e.target.value })}
                 className="focus-ring rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0eab3] sm:col-span-2">
-                <option value="llamada" className="bg-white/[0.04]">Contacto preferido: Llamada</option>
-                <option value="whatsapp" className="bg-white/[0.04]">Contacto preferido: WhatsApp</option>
-                <option value="correo" className="bg-white/[0.04]">Contacto preferido: Correo</option>
+                <option value="llamada" className="bg-[#141416]">Contacto preferido: Llamada</option>
+                <option value="whatsapp" className="bg-[#141416]">Contacto preferido: WhatsApp</option>
+                <option value="correo" className="bg-[#141416]">Contacto preferido: Correo</option>
               </select>
               <textarea placeholder="Notas internas" rows={2} value={editando.notas || ''} onChange={(e) => setEditando({ ...editando, notas: e.target.value })}
                 className="focus-ring resize-none rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0ea] sm:col-span-2" />

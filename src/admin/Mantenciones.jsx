@@ -87,7 +87,8 @@ export default function Mantenciones() {
       )}
 
       <div className="overflow-hidden rounded-2xl border border-white/10">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
           <thead className="bg-white/[0.03] text-left text-[11px] font-semibold uppercase tracking-wide text-[#f2f0ea73] border-b border-white/10">
             <tr>
               <th className="px-5 py-3 font-normal">Cliente</th>
@@ -130,6 +131,7 @@ export default function Mantenciones() {
           </tbody>
         </table>
       </div>
+      </div>
 
       {nuevo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6">
@@ -141,8 +143,8 @@ export default function Mantenciones() {
             <div className="space-y-4">
               <select required value={nuevo.cliente_id} onChange={(e) => setNuevo({ ...nuevo, cliente_id: e.target.value })}
                 className="focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0eab3]">
-                <option value="" className="bg-white/[0.04]">Cliente…</option>
-                {clientes.map((c) => <option key={c.id} value={c.id} className="bg-white/[0.04]">{c.nombre}</option>)}
+                <option value="" className="bg-[#141416]">Cliente…</option>
+                {clientes.map((c) => <option key={c.id} value={c.id} className="bg-[#141416]">{c.nombre}</option>)}
               </select>
               <input required placeholder="Equipo (ej: Calefont Junkers 5L)" value={nuevo.equipo}
                 onChange={(e) => setNuevo({ ...nuevo, equipo: e.target.value })}

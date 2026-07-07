@@ -52,7 +52,8 @@ export default function Presupuestos() {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-white/10">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
           <thead className="bg-white/[0.03] text-left text-[11px] font-semibold uppercase tracking-wide text-[#f2f0ea73] border-b border-white/10">
             <tr>
               <th className="px-5 py-3 font-normal">Folio</th>
@@ -84,6 +85,7 @@ export default function Presupuestos() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   )

@@ -173,9 +173,9 @@ export default function PresupuestoEditor() {
             onChange={(e) => setPresupuesto({ ...presupuesto, cliente_id: e.target.value })}
             className="focus-ring w-full rounded-xl border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-4 py-2.5 text-sm text-[#f2f0eab3]"
           >
-            <option value="" className="bg-white/[0.04]">Selecciona un cliente…</option>
+            <option value="" className="bg-[#141416]">Selecciona un cliente…</option>
             {clientes.map((c) => (
-              <option key={c.id} value={c.id} className="bg-white/[0.04]">{c.nombre} {c.telefono ? `· ${c.telefono}` : ''}</option>
+              <option key={c.id} value={c.id} className="bg-[#141416]">{c.nombre} {c.telefono ? `· ${c.telefono}` : ''}</option>
             ))}
           </select>
         </div>
