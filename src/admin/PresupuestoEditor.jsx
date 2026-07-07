@@ -220,6 +220,12 @@ export default function PresupuestoEditor() {
               <Plus size={14} /> Agregar ítem
             </button>
           </div>
+          <div className="mb-2 hidden grid-cols-12 gap-2 px-1 sm:grid">
+            <span className="col-span-5 text-[11px] font-medium uppercase tracking-wide text-[#f2f0ea59]">Descripción</span>
+            <span className="col-span-2 text-[11px] font-medium uppercase tracking-wide text-[#f2f0ea59]">Cantidad</span>
+            <span className="col-span-2 text-[11px] font-medium uppercase tracking-wide text-[#f2f0ea59]">Unidad</span>
+            <span className="col-span-2 text-[11px] font-medium uppercase tracking-wide text-[#f2f0ea59]">Precio</span>
+          </div>
           <div className="space-y-3">
             {presupuesto.items.map((item, idx) => (
               <div key={item.id} className="grid grid-cols-12 gap-2">
