@@ -99,7 +99,7 @@ export function generarPresupuestoPDF({ presupuesto, cliente, logoDataUrl }) {
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(9)
   doc.text('DESCRIPCIÓN', colDesc + 8, y + 15)
-  doc.text('CANT.', colCant, y + 15)
+  doc.text('CANT./UN.', colCant, y + 15)
   doc.text('P. UNIT.', colPU, y + 15)
   doc.text('TOTAL', colTotal, y + 15, { align: 'right' })
   y += 22
@@ -115,7 +115,7 @@ export function generarPresupuestoPDF({ presupuesto, cliente, logoDataUrl }) {
     doc.setTextColor(30, 30, 30)
     const descLines = doc.splitTextToSize(item.descripcion || '', colCant - colDesc - 16)
     doc.text(descLines[0] || '', colDesc + 8, y + 14)
-    doc.text(String(item.cantidad ?? 1), colCant, y + 14)
+    doc.text(`${item.cantidad ?? 1} ${item.unidad || 'UN'}`, colCant, y + 14)
     doc.text(formatCLP(item.precio_unitario), colPU, y + 14)
     doc.text(formatCLP((item.cantidad || 0) * (item.precio_unitario || 0)), colTotal, y + 14, { align: 'right' })
     y += rowH

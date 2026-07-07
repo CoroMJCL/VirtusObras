@@ -18,7 +18,15 @@ async function logoComoBase64() {
   })
 }
 
-const ITEM_VACIO = () => ({ id: crypto.randomUUID(), descripcion: '', cantidad: 1, precio_unitario: 0 })
+const UNIDADES = [
+  { valor: 'UN', label: 'UN — Unidad' },
+  { valor: 'M2', label: 'M2 — Metro cuadrado' },
+  { valor: 'M3', label: 'M3 — Metro cúbico' },
+  { valor: 'ML', label: 'ML — Metro lineal' },
+  { valor: 'GL', label: 'GL — Global' },
+]
+
+const ITEM_VACIO = () => ({ id: crypto.randomUUID(), descripcion: '', unidad: 'UN', cantidad: 1, precio_unitario: 0 })
 
 export default function PresupuestoEditor() {
   const { id } = useParams()
@@ -212,27 +220,38 @@ export default function PresupuestoEditor() {
               <Plus size={14} /> Agregar ítem
             </button>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {presupuesto.items.map((item, idx) => (
-              <div key={item.id} className="grid grid-cols-12 gap-2">
+              <div key={item.id} className="rounded-lg border border-white/10 bg-white/[0.02] p-2.5">
                 <input
                   placeholder="Descripción" value={item.descripcion}
                   onChange={(e) => actualizarItem(idx, 'descripcion', e.target.value)}
-                  className="focus-ring col-span-6 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea]"
+                  className="focus-ring mb-2 w-full rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea]"
                 />
-                <input
-                  type="number" min="0" placeholder="Cant." value={item.cantidad}
-                  onChange={(e) => actualizarItem(idx, 'cantidad', e.target.value)}
-                  className="focus-ring col-span-2 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea]"
-                />
-                <input
-                  type="number" min="0" placeholder="Precio unit." value={item.precio_unitario}
-                  onChange={(e) => actualizarItem(idx, 'precio_unitario', e.target.value)}
-                  className="focus-ring col-span-3 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea]"
-                />
-                <button onClick={() => quitarItem(idx)} className="focus-ring col-span-1 flex items-center justify-center text-[#f2f0ea73] hover:text-red-400">
-                  <Trash2 size={16} />
-                </button>
+                <div className="grid grid-cols-12 gap-2">
+                  <select
+                    value={item.unidad || 'UN'} onChange={(e) => actualizarItem(idx, 'unidad', e.target.value)}
+                    title="Unidad de medida"
+                    className="focus-ring col-span-4 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-2 py-2 text-sm text-[#f2f0eab3] sm:col-span-3"
+                  >
+                    {UNIDADES.map((u) => (
+                      <option key={u.valor} value={u.valor} className="bg-[#141416]">{u.label}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="number" min="0" step="0.01" placeholder="Cant." value={item.cantidad}
+                    onChange={(e) => actualizarItem(idx, 'cantidad', e.target.value)}
+                    className="focus-ring col-span-3 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea] sm:col-span-2"
+                  />
+                  <input
+                    type="number" min="0" placeholder="Precio unit." value={item.precio_unitario}
+                    onChange={(e) => actualizarItem(idx, 'precio_unitario', e.target.value)}
+                    className="focus-ring col-span-4 rounded-lg border border-white/15 bg-white/[0.04] backdrop-blur-xl focus:border-[#c9a227]/60 focus:ring-2 focus:ring-[#c9a227]/10 px-3 py-2 text-sm text-[#f2f0ea] sm:col-span-6"
+                  />
+                  <button onClick={() => quitarItem(idx)} className="focus-ring col-span-1 flex items-center justify-center text-[#f2f0ea73] hover:text-red-400">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
