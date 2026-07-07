@@ -108,11 +108,12 @@ export default function AdminLayout() {
           <span className="text-[13.5px] font-medium text-bone">{paginaActual?.label || 'Panel'}</span>
         </div>
         <button
+          type="button"
           onClick={() => setMenuAbierto(true)}
           aria-label="Abrir menú"
           className="focus-ring flex h-9 w-9 items-center justify-center rounded-lg text-bone/70 hover:bg-white/5"
         >
-          <Menu size={20} />
+          <Menu size={20} className="pointer-events-none" />
         </button>
       </div>
 
