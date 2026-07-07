@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Camera } from 'lucide-react'
+import { Camera, Plus, Trash2 } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient.js'
 import { useAuth } from '../hooks/useAuth.js'
 import RichTextEditor from '../components/RichTextEditor.jsx'
@@ -47,6 +47,64 @@ function PerfilFoto() {
         <p className="text-[13.5px] font-medium text-[#f2f0ea]">{subiendo ? 'Subiendo…' : 'Foto de perfil'}</p>
         <p className="text-[12.5px] text-[#f2f0ea59]">Se muestra en el menú lateral del panel.</p>
       </div>
+    </div>
+  )
+}
+
+function ServiciosEditor({ servicios, onChange }) {
+  const lista = Array.isArray(servicios) ? servicios : []
+
+  const actualizar = (i, campo, valor) => {
+    const nuevos = [...lista]
+    nuevos[i] = { ...nuevos[i], [campo]: valor }
+    onChange(nuevos)
+  }
+
+  const agregar = () => onChange([...lista, { titulo: '', descripcion: '', items: [] }])
+  const quitar = (i) => onChange(lista.filter((_, idx) => idx !== i))
+
+  return (
+    <div className="space-y-4">
+      {lista.map((s, i) => (
+        <div key={i} className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-xs font-medium uppercase tracking-wide text-bone/40">Servicio {i + 1}</p>
+            <button type="button" onClick={() => quitar(i)} className="focus-ring text-bone/40 hover:text-red-400">
+              <Trash2 size={15} />
+            </button>
+          </div>
+          <div className="space-y-3">
+            <input
+              placeholder="Título (ej: Gasfitería con Certificación SEC)"
+              value={s.titulo || ''}
+              onChange={(e) => actualizar(i, 'titulo', e.target.value)}
+              className="focus-ring w-full rounded-lg border border-white/15 bg-white/[0.04] px-3.5 py-2 text-sm text-bone backdrop-blur-xl"
+            />
+            <textarea
+              placeholder="Descripción breve"
+              rows={2}
+              value={s.descripcion || ''}
+              onChange={(e) => actualizar(i, 'descripcion', e.target.value)}
+              className="focus-ring w-full resize-none rounded-lg border border-white/15 bg-white/[0.04] px-3.5 py-2 text-sm text-bone backdrop-blur-xl"
+            />
+            <textarea
+              placeholder={'Ítems de la lista, uno por línea:\nInstalación y reposición de artefactos sanitarios\nReparación de redes de agua potable'}
+              rows={4}
+              value={(s.items || []).join('\n')}
+              onChange={(e) => actualizar(i, 'items', e.target.value.split('\n').filter((l) => l.trim() !== ''))}
+              className="focus-ring w-full resize-none rounded-lg border border-white/15 bg-white/[0.04] px-3.5 py-2 text-sm text-bone backdrop-blur-xl"
+            />
+          </div>
+        </div>
+      ))}
+
+      <button
+        type="button"
+        onClick={agregar}
+        className="focus-ring flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 py-3 text-sm text-bone/50 hover:border-gold/40 hover:text-gold"
+      >
+        <Plus size={15} /> Agregar servicio
+      </button>
     </div>
   )
 }
@@ -158,11 +216,28 @@ export default function Configuracion() {
           </div>
         </Seccion>
 
-        <Seccion titulo="Quiénes somos" descripcion="Aparece en la página principal. Déjalo vacío para ocultar la sección.">
+        <Seccion titulo="Quiénes somos — Biografía" descripcion="El texto libre de introducción. Aparece arriba de todo, en la página principal.">
           <RichTextEditor
             value={config.quienes_somos_html || ''}
             onChange={(html) => setConfig({ ...config, quienes_somos_html: html })}
-            placeholder="Cuenta la historia de la empresa, la experiencia del ingeniero, años en el rubro, etc."
+            placeholder="Cuenta la trayectoria, años de experiencia, proyectos destacados, etc."
+          />
+        </Seccion>
+
+        <Seccion titulo="Quiénes somos — Servicios destacados" descripcion="Se muestran como tarjetas debajo de la biografía. Deja la lista vacía si no quieres mostrar esta parte.">
+          <ServiciosEditor
+            servicios={config.quienes_somos_servicios}
+            onChange={(servicios) => setConfig({ ...config, quienes_somos_servicios: servicios })}
+          />
+        </Seccion>
+
+        <Seccion titulo="Quiénes somos — Mensaje de cierre" descripcion="Frase corta al final de la sección (opcional).">
+          <textarea
+            rows={2}
+            value={config.quienes_somos_cierre || ''}
+            onChange={(e) => setConfig({ ...config, quienes_somos_cierre: e.target.value })}
+            placeholder="Ej: Creo en el trabajo responsable, la comunicación transparente y el compromiso con los plazos acordados."
+            className={`${inputClass} resize-none`}
           />
         </Seccion>
 

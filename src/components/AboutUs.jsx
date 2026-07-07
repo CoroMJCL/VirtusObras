@@ -1,26 +1,57 @@
-// Sección "Quiénes somos" — el contenido viene del panel admin (texto enriquecido).
-// Si el ingeniero no ha escrito nada todavía, la sección no se muestra.
-export default function AboutUs({ contenidoHtml }) {
-  if (!contenidoHtml || contenidoHtml.trim() === '') return null
+import { CheckCircle2 } from 'lucide-react'
+
+// Sección "Quiénes somos": bio libre (rich text) + servicios destacados
+// como tarjetas estructuradas + mensaje de cierre opcional.
+export default function AboutUs({ contenidoHtml, servicios = [], cierre }) {
+  const hayBio = contenidoHtml && contenidoHtml.trim() !== ''
+  const hayServicios = Array.isArray(servicios) && servicios.length > 0
+  const hayCierre = cierre && cierre.trim() !== ''
+
+  if (!hayBio && !hayServicios && !hayCierre) return null
 
   return (
     <section id="quienes-somos" className="border-t border-white/5 bg-obsidian py-24">
-      <div className="mx-auto max-w-3xl px-6">
+      <div className="mx-auto max-w-5xl px-6">
         <p className="eyebrow mb-3 text-xs uppercase text-gold">Quiénes somos</p>
-        <div
-          className="max-w-none text-[16.5px] leading-[1.85] text-bone/70
-            [&>p]:mb-5
-            [&_h1]:mt-12 [&_h1]:mb-4 [&_h1]:font-display [&_h1]:text-2xl [&_h1]:font-medium [&_h1]:text-bone
-            [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-bone
-            [&_h3]:mt-10 [&_h3]:mb-3 [&_h3]:text-[19px] [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:text-gold [&_h3]:first:mt-0
-            [&_strong]:font-semibold [&_strong]:text-bone
-            [&_a]:text-gold [&_a]:underline [&_a]:underline-offset-2
-            [&_ul]:mb-6 [&_ul]:mt-3 [&_ul]:list-none [&_ul]:space-y-2.5 [&_ul]:pl-0
-            [&_ul_li]:relative [&_ul_li]:pl-6
-            [&_ul_li]:before:absolute [&_ul_li]:before:left-0 [&_ul_li]:before:top-[0.65em] [&_ul_li]:before:h-1.5 [&_ul_li]:before:w-1.5 [&_ul_li]:before:rounded-full [&_ul_li]:before:bg-gold/60
-            [&_ol]:mb-6 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:space-y-2.5 [&_ol]:pl-5 [&_ol]:marker:text-gold/70"
-          dangerouslySetInnerHTML={{ __html: contenidoHtml }}
-        />
+
+        {hayBio && (
+          <div
+            className="mb-14 max-w-3xl text-[17px] font-light leading-[1.8] text-bone/75 first:[&>p]:font-display first:[&>p]:text-[21px] first:[&>p]:leading-[1.6] first:[&>p]:text-bone [&>p]:mb-5 [&_strong]:font-medium [&_strong]:text-bone [&_a]:text-gold [&_a]:underline"
+            dangerouslySetInnerHTML={{ __html: contenidoHtml }}
+          />
+        )}
+
+        {hayServicios && (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {servicios.map((s, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors hover:border-gold/25"
+              >
+                <h3 className="font-display text-[19px] font-medium text-bone">{s.titulo}</h3>
+                {s.descripcion && (
+                  <p className="mt-3 text-[14.5px] leading-relaxed text-bone/55">{s.descripcion}</p>
+                )}
+                {s.items?.length > 0 && (
+                  <ul className="mt-5 space-y-2.5">
+                    {s.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-2 text-[13.5px] leading-relaxed text-bone/65">
+                        <CheckCircle2 size={15} className="mt-0.5 flex-none text-gold/70" strokeWidth={1.75} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {hayCierre && (
+          <p className="mx-auto mt-14 max-w-2xl text-center text-[15.5px] italic leading-relaxed text-bone/50">
+            {cierre}
+          </p>
+        )}
       </div>
     </section>
   )

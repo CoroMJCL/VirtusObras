@@ -58,7 +58,11 @@ export default function Landing() {
         subtitulo={config?.hero_subtitulo}
         numeroWhatsapp={numeroWhatsapp}
       />
-      <AboutUs contenidoHtml={config?.quienes_somos_html} />
+      <AboutUs
+        contenidoHtml={config?.quienes_somos_html}
+        servicios={config?.quienes_somos_servicios}
+        cierre={config?.quienes_somos_cierre}
+      />
       <Services servicios={servicios} />
       <ProcessBar />
       <CredentialsSection />
