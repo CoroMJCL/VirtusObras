@@ -1,11 +1,14 @@
-import { CheckCircle2 } from 'lucide-react'
+import { useState } from 'react'
+import { CheckCircle2, ChevronDown } from 'lucide-react'
 
 // Sección "Quiénes somos": bio libre (rich text) + servicios destacados
 // como tarjetas estructuradas + mensaje de cierre opcional.
 export default function AboutUs({ contenidoHtml, servicios = [], cierre }) {
+  const [expandido, setExpandido] = useState(false)
   const hayBio = contenidoHtml && contenidoHtml.trim() !== ''
   const hayServicios = Array.isArray(servicios) && servicios.length > 0
   const hayCierre = cierre && cierre.trim() !== ''
+  const bioLarga = hayBio && contenidoHtml.length > 500
 
   if (!hayBio && !hayServicios && !hayCierre) return null
 
@@ -15,10 +18,26 @@ export default function AboutUs({ contenidoHtml, servicios = [], cierre }) {
         <p className="eyebrow mb-3 text-xs uppercase text-gold">Quiénes somos</p>
 
         {hayBio && (
-          <div
-            className="mb-14 max-w-3xl text-[17px] font-light leading-[1.8] text-bone/75 first:[&>p]:font-display first:[&>p]:text-[21px] first:[&>p]:leading-[1.6] first:[&>p]:text-bone [&>p]:mb-5 [&_strong]:font-medium [&_strong]:text-bone [&_a]:text-gold [&_a]:underline"
-            dangerouslySetInnerHTML={{ __html: contenidoHtml }}
-          />
+          <div className="mb-14 max-w-3xl">
+            <div
+              className={`relative overflow-hidden text-[17px] font-light leading-[1.8] text-bone/75 [&_*]:!text-[17px] [&_*]:!leading-[1.8] [&>p]:mb-5 [&_strong]:font-medium [&_strong]:text-bone [&_a]:text-gold [&_a]:underline ${
+                bioLarga && !expandido ? 'max-h-[280px]' : ''
+              }`}
+              dangerouslySetInnerHTML={{ __html: contenidoHtml }}
+            />
+            {bioLarga && !expandido && (
+              <div className="pointer-events-none -mt-20 h-20 bg-gradient-to-t from-obsidian to-transparent" />
+            )}
+            {bioLarga && (
+              <button
+                onClick={() => setExpandido((e) => !e)}
+                className="focus-ring mt-2 flex items-center gap-1 text-[13.5px] text-gold hover:underline"
+              >
+                {expandido ? 'Mostrar menos' : 'Leer más'}
+                <ChevronDown size={14} className={expandido ? 'rotate-180 transition-transform' : 'transition-transform'} />
+              </button>
+            )}
+          </div>
         )}
 
         {hayServicios && (
